@@ -1,2 +1,2 @@
 angular.module 'Coinchoid.toto'
-.controller 'StatsCtrl', ($scope) ->
+.controller 'DoneCtrl', ($scope) ->

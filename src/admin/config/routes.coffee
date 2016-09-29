@@ -4,5 +4,5 @@ angular.module 'Coinchoid.toto'
 
   .state 'home',
     url: '/'
-    controller: 'StatsCtrl'
+    controller: 'DoneCtrl'
     templateUrl: 'admin/states/daily-stats/view.html'

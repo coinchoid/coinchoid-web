@@ -28,9 +28,9 @@ angular.module('Coinchoid.toto', []);
 angular.module('Coinchoid.toto').config(function($stateProvider) {
   return $stateProvider.state('home', {
     url: '/',
-    controller: 'StatsCtrl',
+    controller: 'DoneCtrl',
     templateUrl: 'admin/states/daily-stats/view.html'
   });
 });
 
-angular.module('Coinchoid.toto').controller('StatsCtrl', function($scope) {});
+angular.module('Coinchoid.toto').controller('DoneCtrl', function($scope) {});
