@@ -26,4 +26,4 @@ app.config (localStorageServiceProvider) ->
 
 app.config ($mdIconProvider) ->
   $mdIconProvider
-    .defaultIconSet 'icons/mdi.light.svg'
+    .defaultIconSet 'images/icons/mdi.light.svg'

@@ -1,6 +1,6 @@
 angular.module 'Coinchoid'
-.service 'Parties', ->
-  parties = []
+.service 'Parties', (localStorageService) ->
+  parties = localStorageService.get('results') or []
 
   getCumulativeScore = ->
     cumulativeResult = [{
@@ -31,6 +31,7 @@ angular.module 'Coinchoid'
         nous: 0
         eux: score
       }
+    localStorageService.set('results', parties)
 
   getCumulativeScore: getCumulativeScore
 

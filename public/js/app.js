@@ -13,7 +13,7 @@ app.config(function(localStorageServiceProvider) {
 });
 
 app.config(function($mdIconProvider) {
-  return $mdIconProvider.defaultIconSet('icons/mdi.light.svg');
+  return $mdIconProvider.defaultIconSet('images/icons/mdi.light.svg');
 });
 
 angular.module("Scrumble.constants", [])
@@ -35,9 +35,9 @@ angular.module('Coinchoid').config(function($stateProvider) {
   });
 });
 
-angular.module('Coinchoid').service('Parties', function() {
+angular.module('Coinchoid').service('Parties', function(localStorageService) {
   var getCumulativeScore, parties;
-  parties = [];
+  parties = localStorageService.get('results') || [];
   getCumulativeScore = function() {
     var cumulativeResult, last, partie, _i, _len;
     cumulativeResult = [
@@ -67,16 +67,17 @@ angular.module('Coinchoid').service('Parties', function() {
         score = score * 4;
       }
       if (team === 'NOUS') {
-        return parties.push({
+        parties.push({
           nous: score,
           eux: 0
         });
       } else {
-        return parties.push({
+        parties.push({
           nous: 0,
           eux: score
         });
       }
+      return localStorageService.set('results', parties);
     },
     getCumulativeScore: getCumulativeScore,
     get: function() {
