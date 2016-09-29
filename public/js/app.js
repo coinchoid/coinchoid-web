@@ -1,3 +1,10 @@
+angular.module("Scrumble.constants", [])
+
+.constant("API_URL", "http://localhost:8000/v1")
+
+.constant("GOOGLE_CLIENT_ID", "TO BE DEFINED")
+
+;
 'use strict';
 var app;
 
@@ -16,15 +23,8 @@ app.config(function($mdIconProvider) {
   return $mdIconProvider.defaultIconSet('icons/mdi.light.svg');
 });
 
-angular.module("Scrumble.constants", [])
-
-.constant("API_URL", "http://localhost:8000/v1")
-
-.constant("GOOGLE_CLIENT_ID", "TO BE DEFINED")
-
-;
 angular.module('Coinchoid').config(function($stateProvider) {
-  return $stateProvider.state('home', {
+  return $stateProvider.state('annonce', {
     url: '/',
     controller: 'DonneCtrl',
     templateUrl: 'states/donne/view.html'
@@ -54,19 +54,29 @@ angular.module('Coinchoid').service('Parties', function() {
     },
     get: function() {
       return parties;
+    },
+    reset: function() {
+      return parties = [];
     }
   };
 });
 
-angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties) {
-  return $scope.parties = Parties.get();
-});
-
-angular.module('Coinchoid').controller('DonneCtrl', function($scope, Parties) {
+angular.module('Coinchoid').controller('DonneCtrl', function($scope, $state, Parties) {
+  $scope.annonce = 80;
   $scope.nous = function(annonce, bonus) {
-    return Parties.addScore('NOUS', annonce, bonus);
+    Parties.addScore('NOUS', annonce, bonus);
+    return $state.go('resultats');
   };
   return $scope.eux = function(annonce, bonus) {
-    return Parties.addScore('EUX', annonce, bonus);
+    Parties.addScore('EUX', annonce, bonus);
+    return $state.go('resultats');
+  };
+});
+
+angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties, $state) {
+  $scope.parties = Parties.get();
+  return $scope.reset = function() {
+    Parties.reset();
+    return $state.go('annonce');
   };
 });

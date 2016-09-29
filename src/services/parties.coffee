@@ -15,3 +15,5 @@ angular.module 'Coinchoid'
       }
   get: ->
     parties
+  reset: ->
+    parties = []

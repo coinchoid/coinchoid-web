@@ -2,7 +2,7 @@ angular.module 'Coinchoid'
 .config ($stateProvider) ->
   $stateProvider
 
-  .state 'home',
+  .state 'annonce',
     url: '/'
     controller: 'DonneCtrl'
     templateUrl: 'states/donne/view.html'
