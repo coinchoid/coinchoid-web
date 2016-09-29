@@ -1,0 +1,32 @@
+{
+  "name": "coicnhoid",
+  "description": "",
+  "main": "gulpfile.js",
+  "license": "MIT",
+  "keywords": [
+    "scrum"
+  ],
+  "homepage": "https://github.com/coinchoid/coinchoid-web",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "0.2.15",
+    "angular": "1.4.9",
+    "angular-resource": "1.4.9",
+    "angular-local-storage": "0.2.3",
+    "angular-material": "1.1.0-rc.5",
+    "mdi": "1.3.41",
+    "angular-sanitize": "1.4.9",
+    "angular-messages": "1.4.9",
+    "lodash": "4.13.1"
+  },
+  "resolutions": {
+    "angular": "1.5.8"
+  }
+}
