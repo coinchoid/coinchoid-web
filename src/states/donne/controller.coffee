@@ -16,7 +16,3 @@ angular.module 'Coinchoid'
     $scope.score = Parties.getScore()
 
   $scope.score = Parties.getScore()
-
-  $scope.reset = ->
-    Parties.reset()
-    $scope.score = Parties.getScore()

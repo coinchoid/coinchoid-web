@@ -24,11 +24,15 @@ angular.module("Scrumble.constants", [])
 
 ;
 angular.module('Coinchoid').config(function($stateProvider) {
-  return $stateProvider.state('annonce', {
+  return $stateProvider.state('nav', {
+    abstract: true,
+    templateUrl: 'states/nav.html',
+    controller: 'NavCtrl'
+  }).state('nav.annonce', {
     url: '/',
     controller: 'DonneCtrl',
     templateUrl: 'states/donne/view.html'
-  }).state('resultats', {
+  }).state('nav.resultats', {
     url: '/resultats',
     controller: 'ResultatsCtrl',
     templateUrl: 'states/resultats/view.html'
@@ -135,6 +139,23 @@ angular.module('Coinchoid').service('Parties', function(localStorageService) {
   };
 });
 
+angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, Parties, $state) {
+  $scope.toggleSidenav = function() {
+    return $mdSidenav('left').toggle();
+  };
+  $scope.reset = function() {
+    Parties.reset();
+    $state.go('nav.annonce', {}, {
+      reload: true
+    });
+    return $mdSidenav('left').toggle();
+  };
+  return $scope.goToDetails = function() {
+    $mdSidenav('left').toggle();
+    return $state.go('nav.resultats');
+  };
+});
+
 angular.module('Coinchoid').controller('DonneCtrl', function($scope, $state, Parties) {
   $scope.annonce = 80;
   $scope.bonus = 'NORMAL';
@@ -151,11 +172,7 @@ angular.module('Coinchoid').controller('DonneCtrl', function($scope, $state, Par
     }
     return $scope.score = Parties.getScore();
   };
-  $scope.score = Parties.getScore();
-  return $scope.reset = function() {
-    Parties.reset();
-    return $scope.score = Parties.getScore();
-  };
+  return $scope.score = Parties.getScore();
 });
 
 angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties, $state) {
