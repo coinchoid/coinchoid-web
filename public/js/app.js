@@ -84,7 +84,8 @@ angular.module('Coinchoid').service('Parties', function(localStorageService) {
       return parties;
     },
     reset: function() {
-      return parties = [];
+      parties = [];
+      return localStorageService.set('results', []);
     },
     getScore: (function(_this) {
       return function() {
@@ -112,7 +113,11 @@ angular.module('Coinchoid').controller('DonneCtrl', function($scope, $state, Par
     }
     return $scope.score = Parties.getScore();
   };
-  return $scope.score = Parties.getScore();
+  $scope.score = Parties.getScore();
+  return $scope.reset = function() {
+    Parties.reset();
+    return $scope.score = Parties.getScore();
+  };
 });
 
 angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties, $state) {

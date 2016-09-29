@@ -22,7 +22,9 @@
     md-radio-button.md-primary(value='EUX')  Eux 
     
   md-button.md-raised.md-primary(ng-click="ok(team, annonce, bonus)") C'est fait !
-  md-button.md-raised.md-warning(ng-click="ko(team, annonce, bonus)") C'est chu !
+  md-button.md-warn(ng-click="ko(team, annonce, bonus)") C'est chu !
 
   h3 Score
   span Nous: {{ score.nous }} - Eux : {{ score.eux }}
+  md-button.md-raised.md-warn(ng-click="reset()") Reset
+  
