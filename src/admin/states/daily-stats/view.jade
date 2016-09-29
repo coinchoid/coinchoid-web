@@ -1,15 +1,24 @@
-h1 Nouvelle Done
+.container
+  h1 Nouvelle Donne
 
-h3 Annonce
-md-slider(
-  ng-model='annonce'
-  step='10', md-discrete=''
-  min='80'
-  max='250'
-  aria-label='Annonce'
-)
+  h3 Annonce
+  md-slider(
+    ng-model='annonce'
+    step='10', md-discrete=''
+    min='80'
+    max='250'
+    aria-label='Annonce'
+  )
 
-md-radio-group(ng-model='bonus')
-  md-radio-button.md-primary(value='normal') Normal
-  md-radio-button.md-primary(value='coinche')  Coinché 
-  md-radio-button.md-primary(value='surcoinche') Surcoinché
+  md-radio-group(ng-model='bonus')
+    md-radio-button.md-primary(value='normal') Normal
+    md-radio-button.md-primary(value='coinche')  Coinché 
+    md-radio-button.md-primary(value='surcoinche') Surcoinché
+
+  h3 Qui prend ?
+
+  md-radio-group(ng-model='quiPrend')
+    md-radio-button.md-primary(value='nous') Nous
+    md-radio-button.md-primary(value='eux')  Eux 
+    
+  md-button.md-raised.md-primary Jouer la donne !
