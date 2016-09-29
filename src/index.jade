@@ -8,7 +8,16 @@ html(lang="en", ng-app="Coinchoid")
     link(rel="stylesheet" href="css/app.css")
     link(rel="icon", type="image/x-icon", href="images/favicon.ico")
 
+    <!-- https://developers.google.com/web/fundamentals/getting-started/your-first-progressive-web-app/step-07?hl=en -->
     link(rel="manifest" href="/manifest.json")
+    <!-- Add to home screen for Safari on iOS -->
+    meta(name="apple-mobile-web-app-capable" content="yes")
+    meta(name="apple-mobile-web-app-status-bar-style" content="black")
+    meta(name="apple-mobile-web-app-title" content="Coinchoid")
+    link(rel="apple-touch-icon" href="images/icons/icon-152x152.png")
+    <!-- Tile Icon for Windows -->
+    meta(name="msapplication-TileImage" content="images/icons/icon-144x144.png")
+    meta(name="msapplication-TileColor" content="#85B22C")
 
   body
     md-content.grey-background(ui-view layout="column")
