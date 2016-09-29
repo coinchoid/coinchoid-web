@@ -11,15 +11,18 @@
   )
 
   md-radio-group(ng-model='bonus')
-    md-radio-button.md-primary(value='normal') Normal
-    md-radio-button.md-primary(value='coinche')  Coinché 
-    md-radio-button.md-primary(value='surcoinche') Surcoinché
+    md-radio-button.md-primary(value='NORMAL') Normal
+    md-radio-button.md-primary(value='COINCHE')  Coinché 
+    md-radio-button.md-primary(value='SURCOINCHE') Surcoinché
 
   h3 Qui prend ?
 
-  md-radio-group(ng-model='quiPrend')
-    md-radio-button.md-primary(value='nous') Nous
-    md-radio-button.md-primary(value='eux')  Eux 
+  md-radio-group(ng-model='team')
+    md-radio-button.md-primary(value='NOUS') Nous
+    md-radio-button.md-primary(value='EUX')  Eux 
     
-  md-button.md-raised.md-primary(ng-click="nous(annonce, bonus)") C'est fait !
-  md-button.md-raised.md-warning(ng-click="eux(annonce, bonus)") C'est chu !
+  md-button.md-raised.md-primary(ng-click="ok(team, annonce, bonus)") C'est fait !
+  md-button.md-raised.md-warning(ng-click="ko(team, annonce, bonus)") C'est chu !
+
+  h3 Score
+  span Nous: {{ score.nous }} - Eux : {{ score.eux }}
