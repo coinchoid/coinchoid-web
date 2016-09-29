@@ -1,7 +1,7 @@
 'use strict';
 var app;
 
-app = angular.module('Coinchoid', ['ng', 'ngResource', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.router', 'app.templates', 'LocalStorageModule', 'Coinchoid.toto']);
+app = angular.module('Coinchoid', ['ng', 'ngResource', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.router', 'app.templates', 'LocalStorageModule']);
 
 app.config(function($locationProvider, $urlRouterProvider) {
   $locationProvider.hashPrefix('!');
@@ -23,14 +23,12 @@ angular.module("Scrumble.constants", [])
 .constant("GOOGLE_CLIENT_ID", "TO BE DEFINED")
 
 ;
-angular.module('Coinchoid.toto', []);
-
-angular.module('Coinchoid.toto').config(function($stateProvider) {
+angular.module('Coinchoid').config(function($stateProvider) {
   return $stateProvider.state('home', {
     url: '/',
-    controller: 'DoneCtrl',
-    templateUrl: 'admin/states/daily-stats/view.html'
+    controller: 'DonneCtrl',
+    templateUrl: 'states/donne/view.html'
   });
 });
 
-angular.module('Coinchoid.toto').controller('DoneCtrl', function($scope) {});
+angular.module('Coinchoid').controller('DonneCtrl', function($scope) {});

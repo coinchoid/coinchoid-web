@@ -10,7 +10,6 @@ app = angular.module 'Coinchoid', [
   'ui.router'
   'app.templates'
   'LocalStorageModule'
-  'Coinchoid.toto'
 ]
 
 app.config (
