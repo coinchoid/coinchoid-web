@@ -1,0 +1,111 @@
+@import "~react-toolbox/lib/colors";
+@import "~react-toolbox/lib/globals";
+@import "~react-toolbox/lib/mixins";
+
+@import "./config";
+@import "~react-toolbox/components/app_bar/config";
+@import "~react-toolbox/components/button/config";
+
+html {
+  font-size: 62.5%;
+}
+body {
+  margin: 0;
+}
+h2 {
+  margin: auto;
+}
+hr {
+  margin: 4rem 0;
+  border-top: 1px solid $color-divider;
+}
+
+.appbar {
+  padding-right: 8 * $unit;
+}
+
+.playground-button {
+  position: fixed;
+  top: $appbar-height - ($button-floating-height / 2);
+  right: $button-floating-height / 2;
+  z-index: $z-index-highest;
+}
+
+.documentation {
+  position: fixed;
+  top: $appbar-height + 3;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-normal;
+  transition: padding $animation-duration $animation-curve-default;
+}
+
+.navigation {
+  position: fixed;
+  top: $appbar-height;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-high;
+  box-shadow: $documentation-left-shadow;
+  transition: transform $animation-duration $animation-curve-default;
+}
+
+.playground {
+  position: fixed;
+  top: $appbar-height;
+  right: 0;
+  bottom: 0;
+  z-index: $z-index-high;
+  width: $playground-width;
+  background: $color-background;
+  box-shadow: $documentation-right-shadow;
+  transition: transform $animation-duration $animation-curve-default;
+  padding: 20px;
+}
+
+.root {
+  &:not(.with-playground) {
+    > .playground {
+      transform: translateX(100%);
+    }
+    > .documentation {
+      padding-right: 0;
+    }
+    > .navigation {
+      transform: translateX(0);
+    }
+  }
+  &.with-playground {
+    > .playground {
+      transform: translateY(0);
+    }
+    > .documentation {
+      padding-right: $playground-width;
+      padding-left: 0;
+    }
+    > .navigation {
+      transform: translateX(- 100%);
+    }
+  }
+}
+
+.load-button {
+  display: inline-block;
+}
+
+@media(min-width: $media-min-width) {
+  .root {
+    .playground {
+      width: $playground-max-width;
+    }
+    &.with-playground {
+      > .documentation {
+        padding-right: $playground-max-width;
+      }
+      > .navigation {
+        transform: translateX(0);
+      }
+    }
+  }
+}
