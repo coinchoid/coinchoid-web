@@ -48,13 +48,15 @@ self.addEventListener('install', e => {
         '/index.html',
         '/css/vendor.css',
         '/css/app.css',
+        'images/icons/mdi.light.svg',
+        '/images/icons/icon.svg',
         '/images/icons/icon-256x256.png',
         '/images/icons/icon-192x192.png',
         '/images/icons/icon-152x152.png',
-        '/images/icons/icon.svg',
         '/images/icons/icon-128x128.png',
         '/images/icons/icon-144x144.png',
         '/js/templates.js',
+        '/js/app.js',
         '/js/vendor.js'
       ])
       .then(() => self.skipWaiting());
@@ -153,14 +155,6 @@ angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, P
   };
 });
 
-angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties, $state) {
-  $scope.parties = Parties.getCumulativeScore();
-  return $scope.reset = function() {
-    Parties.reset();
-    return $state.go('annonce');
-  };
-});
-
 angular.module('Coinchoid').controller('DonneCtrl', function($scope, $state, Parties) {
   $scope.annonce = 80;
   $scope.bonus = 'NORMAL';
@@ -178,4 +172,12 @@ angular.module('Coinchoid').controller('DonneCtrl', function($scope, $state, Par
     return $scope.score = Parties.getScore();
   };
   return $scope.score = Parties.getScore();
+});
+
+angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties, $state) {
+  $scope.parties = Parties.getCumulativeScore();
+  return $scope.reset = function() {
+    Parties.reset();
+    return $state.go('annonce');
+  };
 });

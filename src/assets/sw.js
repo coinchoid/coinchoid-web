@@ -7,13 +7,15 @@ self.addEventListener('install', e => {
         '/index.html',
         '/css/vendor.css',
         '/css/app.css',
+        'images/icons/mdi.light.svg',
+        '/images/icons/icon.svg',
         '/images/icons/icon-256x256.png',
         '/images/icons/icon-192x192.png',
         '/images/icons/icon-152x152.png',
-        '/images/icons/icon.svg',
         '/images/icons/icon-128x128.png',
         '/images/icons/icon-144x144.png',
         '/js/templates.js',
+        '/js/app.js',
         '/js/vendor.js'
       ])
       .then(() => self.skipWaiting());
