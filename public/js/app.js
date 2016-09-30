@@ -23,6 +23,22 @@ angular.module("Scrumble.constants", [])
 .constant("GOOGLE_CLIENT_ID", "TO BE DEFINED")
 
 ;
+angular.module('Coinchoid').config(function($stateProvider) {
+  return $stateProvider.state('nav', {
+    abstract: true,
+    templateUrl: 'states/nav.html',
+    controller: 'NavCtrl'
+  }).state('nav.annonce', {
+    url: '/',
+    controller: 'DonneCtrl',
+    templateUrl: 'states/donne/view.html'
+  }).state('nav.resultats', {
+    url: '/resultats',
+    controller: 'ResultatsCtrl',
+    templateUrl: 'states/resultats/view.html'
+  });
+});
+
 
 self.addEventListener('install', e => {
   e.waitUntil(
@@ -56,22 +72,6 @@ self.addEventListener('fetch', event => {
       return response || fetch(event.request);
     })
   );
-});
-
-angular.module('Coinchoid').config(function($stateProvider) {
-  return $stateProvider.state('nav', {
-    abstract: true,
-    templateUrl: 'states/nav.html',
-    controller: 'NavCtrl'
-  }).state('nav.annonce', {
-    url: '/',
-    controller: 'DonneCtrl',
-    templateUrl: 'states/donne/view.html'
-  }).state('nav.resultats', {
-    url: '/resultats',
-    controller: 'ResultatsCtrl',
-    templateUrl: 'states/resultats/view.html'
-  });
 });
 
 angular.module('Coinchoid').service('Parties', function(localStorageService) {
@@ -153,6 +153,14 @@ angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, P
   };
 });
 
+angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties, $state) {
+  $scope.parties = Parties.getCumulativeScore();
+  return $scope.reset = function() {
+    Parties.reset();
+    return $state.go('annonce');
+  };
+});
+
 angular.module('Coinchoid').controller('DonneCtrl', function($scope, $state, Parties) {
   $scope.annonce = 80;
   $scope.bonus = 'NORMAL';
@@ -170,12 +178,4 @@ angular.module('Coinchoid').controller('DonneCtrl', function($scope, $state, Par
     return $scope.score = Parties.getScore();
   };
   return $scope.score = Parties.getScore();
-});
-
-angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties, $state) {
-  $scope.parties = Parties.getCumulativeScore();
-  return $scope.reset = function() {
-    Parties.reset();
-    return $state.go('annonce');
-  };
 });
