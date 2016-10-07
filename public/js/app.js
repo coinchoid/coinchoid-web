@@ -16,29 +16,6 @@ app.config(function($mdIconProvider) {
   return $mdIconProvider.defaultIconSet('images/icons/mdi.light.svg');
 });
 
-angular.module("Scrumble.constants", [])
-
-.constant("API_URL", "http://localhost:8000/v1")
-
-.constant("GOOGLE_CLIENT_ID", "TO BE DEFINED")
-
-;
-angular.module('Coinchoid').config(function($stateProvider) {
-  return $stateProvider.state('nav', {
-    abstract: true,
-    templateUrl: 'states/nav.html',
-    controller: 'NavCtrl'
-  }).state('nav.annonce', {
-    url: '/',
-    controller: 'DonneCtrl',
-    templateUrl: 'states/donne/view.html'
-  }).state('nav.resultats', {
-    url: '/resultats',
-    controller: 'ResultatsCtrl',
-    templateUrl: 'states/resultats/view.html'
-  });
-});
-
 
 self.addEventListener('install', e => {
   e.waitUntil(
@@ -74,6 +51,22 @@ self.addEventListener('fetch', event => {
       return response || fetch(event.request);
     })
   );
+});
+
+angular.module('Coinchoid').config(function($stateProvider) {
+  return $stateProvider.state('nav', {
+    abstract: true,
+    templateUrl: 'states/nav.html',
+    controller: 'NavCtrl'
+  }).state('nav.annonce', {
+    url: '/',
+    controller: 'DonneCtrl',
+    templateUrl: 'states/donne/view.html'
+  }).state('nav.resultats', {
+    url: '/resultats',
+    controller: 'ResultatsCtrl',
+    templateUrl: 'states/resultats/view.html'
+  });
 });
 
 angular.module('Coinchoid').service('Parties', function(localStorageService) {
@@ -152,6 +145,28 @@ angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, P
   return $scope.goToDetails = function() {
     $mdSidenav('left').toggle();
     return $state.go('nav.resultats');
+  };
+});
+
+angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
+  $scope.firstRangeAnnonce = true;
+  $scope.annonce = 80;
+  $scope.select = function(annonce) {
+    return $scope.annonce = annonce;
+  };
+  return $scope.toggleAnnonces = function() {
+    return $scope.firstRangeAnnonce = !$scope.firstRangeAnnonce;
+  };
+});
+
+angular.module('Coinchoid').directive('pointSelector', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'components/point-selector/view.html',
+    scope: {
+      annonce: '='
+    },
+    controller: 'pointSelectorCtrl'
   };
 });
 

@@ -1,11 +1,5 @@
 h3 Annonce
-md-slider(
-  ng-model='annonce'
-  step='10', md-discrete=''
-  min='80'
-  max='250'
-  aria-label='Annonce'
-)
+point-selector(annonce="annonce")
 
 md-radio-group(ng-model='bonus')
   md-radio-button.md-primary(value='NORMAL') Normal

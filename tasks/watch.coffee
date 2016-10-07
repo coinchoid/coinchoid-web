@@ -17,5 +17,4 @@ gulp.task 'watch', ->
     gulp.watch "#{__dirname}/../src/index.jade", ['jade-index']
     gulp.watch "#{__dirname}/../src/**/*.jade", ['jade']
     gulp.watch "#{__dirname}/../src/**/*.less", ['less']
-    gulp.watch "#{__dirname}/../src/translations/*.yml", ['translations']
     gulp.watch 'vendor', ['vendor']

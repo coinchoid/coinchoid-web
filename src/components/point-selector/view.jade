@@ -1,0 +1,15 @@
+div(ng-if="firstRangeAnnonce")
+  md-button.md-raised(
+    ng-repeat="value in [80, 90, 100, 110, 120, 130, 140]"
+    ng-click="select(value)"
+    ng-class="{'md-primary': value === annonce}"
+  ) {{value}}
+  md-button.md-raised(ng-click="toggleAnnonces()") ->
+
+div(ng-if="!firstRangeAnnonce")
+  md-button.md-raised(ng-click="toggleAnnonces()") <-
+  md-button.md-raised(
+    ng-repeat="value in [150, 160, 170, 180, 250]"
+    ng-click="select(value)"
+    ng-class="{'md-primary': value === annonce}"
+  ) {{value === 250 ? 'capot' : value }}
