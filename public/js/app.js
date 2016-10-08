@@ -73,23 +73,6 @@ angular.module('Coinchoid').config(function($stateProvider) {
   });
 });
 
-angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, Parties, $state) {
-  $scope.toggleSidenav = function() {
-    return $mdSidenav('left').toggle();
-  };
-  $scope.reset = function() {
-    Parties.reset();
-    $state.go('nav.annonce', {}, {
-      reload: true
-    });
-    return $mdSidenav('left').toggle();
-  };
-  return $scope.goToDetails = function() {
-    $mdSidenav('left').toggle();
-    return $state.go('nav.resultats');
-  };
-});
-
 angular.module('Coinchoid').service('Parties', function(localStorageService, $rootScope) {
   var getCumulativeScore, parties;
   parties = localStorageService.get('results') || [];
@@ -153,6 +136,23 @@ angular.module('Coinchoid').service('Parties', function(localStorageService, $ro
   };
 });
 
+angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, Parties, $state) {
+  $scope.toggleSidenav = function() {
+    return $mdSidenav('left').toggle();
+  };
+  $scope.reset = function() {
+    Parties.reset();
+    $state.go('nav.annonce', {}, {
+      reload: true
+    });
+    return $mdSidenav('left').toggle();
+  };
+  return $scope.goToDetails = function() {
+    $mdSidenav('left').toggle();
+    return $state.go('nav.resultats');
+  };
+});
+
 angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
   $scope.firstRangeAnnonce = true;
   $scope.annonce = 80;
@@ -191,14 +191,6 @@ angular.module('Coinchoid').directive('score', function() {
   };
 });
 
-angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties, $state) {
-  $scope.parties = Parties.getCumulativeScore();
-  return $scope.reset = function() {
-    Parties.reset();
-    return $state.go('annonce');
-  };
-});
-
 angular.module('Coinchoid').controller('DonneCtrl', function($scope, $state, Parties) {
   $scope.team = 'NOUS';
   $scope.ok = function(team, annonce, bonus) {
@@ -211,5 +203,13 @@ angular.module('Coinchoid').controller('DonneCtrl', function($scope, $state, Par
     } else {
       return Parties.addScore('NOUS', annonce, bonus);
     }
+  };
+});
+
+angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties, $state) {
+  $scope.parties = Parties.getCumulativeScore();
+  return $scope.reset = function() {
+    Parties.reset();
+    return $state.go('annonce');
   };
 });
