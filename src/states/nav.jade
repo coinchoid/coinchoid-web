@@ -1,16 +1,16 @@
-md-toolbar
-  .md-toolbar-tools
-    md-button.md-icon-button(aria-label='Settings' ng-click="toggleSidenav()")
-      md-icon(md-svg-icon='menu')
-    score
-
 div.main(flex layout="row")
   md-sidenav.md-sidenav-left.md-whiteframe-z2(
     layout='column'
     md-component-id='left'
   )
+    .header
+      h1.title Captain Coinche
     md-list
       md-list-item(ng-click="reset()") Nouvelle Partie
-      md-list-item(ng-click="goToDetails()") Détails de la partie
-  main(layout="row" flex)
+  main(layout="column" flex)
+    md-toolbar
+      .md-toolbar-tools
+        md-button.md-icon-button(aria-label='Settings' ng-click="toggleSidenav()")
+          md-icon(md-svg-icon='menu')
+        score
     .container(ui-view)

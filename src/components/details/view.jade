@@ -1,0 +1,8 @@
+md-bottom-sheet.md-list
+  table.results
+    tr
+      th(width="50%") Nous
+      th(width="50%") Eux
+    tr(ng-repeat="partie in parties")
+      td(width="50%") {{ partie.nous }}
+      td(width="50%") {{ partie.eux }}

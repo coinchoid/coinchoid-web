@@ -66,10 +66,6 @@ angular.module('Coinchoid').config(function($stateProvider) {
     url: '/',
     controller: 'DonneCtrl',
     templateUrl: 'states/donne/view.html'
-  }).state('nav.resultats', {
-    url: '/resultats',
-    controller: 'ResultatsCtrl',
-    templateUrl: 'states/resultats/view.html'
   });
 });
 
@@ -140,17 +136,17 @@ angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, P
   $scope.toggleSidenav = function() {
     return $mdSidenav('left').toggle();
   };
-  $scope.reset = function() {
+  return $scope.reset = function() {
     Parties.reset();
     $state.go('nav.annonce', {}, {
       reload: true
     });
     return $mdSidenav('left').toggle();
   };
-  return $scope.goToDetails = function() {
-    $mdSidenav('left').toggle();
-    return $state.go('nav.resultats');
-  };
+});
+
+angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties) {
+  return $scope.parties = Parties.getCumulativeScore();
 });
 
 angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
@@ -191,25 +187,23 @@ angular.module('Coinchoid').directive('score', function() {
   };
 });
 
-angular.module('Coinchoid').controller('DonneCtrl', function($scope, $state, Parties) {
+angular.module('Coinchoid').controller('DonneCtrl', function($scope, $mdBottomSheet, Parties) {
   $scope.team = 'NOUS';
   $scope.ok = function(team, annonce, bonus) {
     Parties.addScore(team, annonce, bonus);
     return $scope.score = Parties.getScore();
   };
-  return $scope.ko = function(team, annonce, bonus) {
+  $scope.ko = function(team, annonce, bonus) {
     if (team === 'NOUS') {
       return Parties.addScore('EUX', annonce, bonus);
     } else {
       return Parties.addScore('NOUS', annonce, bonus);
     }
   };
-});
-
-angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties, $state) {
-  $scope.parties = Parties.getCumulativeScore();
-  return $scope.reset = function() {
-    Parties.reset();
-    return $state.go('annonce');
+  return $scope.openDetails = function() {
+    return $mdBottomSheet.show({
+      templateUrl: 'components/details/view.html',
+      controller: 'ResultatsCtrl'
+    });
   };
 });

@@ -7,6 +7,31 @@
 h3 {
   text-align: center;
 }
+md-sidenav .header {
+  background-color: #b0bec5;
+  width: 100%;
+  height: 171px;
+  position: relative;
+}
+md-sidenav .header .title {
+  font-size: 16px;
+  line-height: 1;
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+  height: 16px;
+  font-weight: 500;
+}
+.bottom-sheet-call {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.results {
+  width: 100%;
+  text-align: center;
+}
 
 point-selector md-radio-button {
   margin-left: 10px !important;

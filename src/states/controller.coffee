@@ -8,7 +8,3 @@ angular.module 'Coinchoid'
     Parties.reset()
     $state.go('nav.annonce', {}, {reload: true})
     $mdSidenav('left').toggle()
-
-  $scope.goToDetails = ->
-    $mdSidenav('left').toggle()
-    $state.go('nav.resultats')
