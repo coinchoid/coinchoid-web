@@ -2,30 +2,39 @@ md-grid-list(
   md-cols='4'
   md-row-height='1:1'
   md-row-height-gt-xs='2:1'
-  md-cols-gt-xs='8'
+  md-cols-gt-xs='6'
   md-gutter='1px'
 )
   md-grid-tile(
     ng-if="firstRangeAnnonce"
-    ng-repeat="value in [80, 90, 100, 110, 120, 130, 140]"
+    ng-repeat="value in [80, 90, 100]"
     ng-click="select(value)"
     ng-class="{'md-primary': value === annonce, 'md-accent': value !== annonce}"
   )
     h3 {{value}}
   md-grid-tile.md-accent(
     ng-if="firstRangeAnnonce"
+    md-rowspan="2"
     ng-click="toggleAnnonces()"
   )
     md-icon(md-svg-icon="arrow-right-bold")
+  md-grid-tile(
+    ng-if="firstRangeAnnonce"
+    ng-repeat="value in [110, 120, 130]"
+    ng-click="select(value)"
+    ng-class="{'md-primary': value === annonce, 'md-accent': value !== annonce}"
+  )
+    h3 {{value}}
 
   md-grid-tile.md-accent(
-  ng-if="!firstRangeAnnonce"
-  ng-click="toggleAnnonces()"
+    ng-if="!firstRangeAnnonce"
+    md-rowspan="2"
+    ng-click="toggleAnnonces()"
   )
     md-icon(md-svg-icon="arrow-left-bold")
   md-grid-tile(
     ng-if="!firstRangeAnnonce"
-    ng-repeat="value in [150, 160, 170, 180, 250]"
+    ng-repeat="value in [140, 150, 160, 170, 180, 250]"
     ng-click="select(value)"
     ng-class="{'md-primary': value === annonce, 'md-accent': value !== annonce}"
   )
