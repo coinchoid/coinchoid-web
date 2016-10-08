@@ -1,0 +1,13 @@
+md-dialog(aria-label='Editor')
+  md-dialog-content
+    .md-dialog-content
+      md-input-container
+        label Nous
+        input(ng-model="result.nous")
+      md-input-container
+        label Eux
+        input(ng-model="result.eux")
+  
+  md-dialog-actions(layout='row')
+    md-button(aria-label="cancel" ng-click="cancel()") Annuler
+    md-button(ng-click="save(result.nous, result.eux)") Sauvegarder

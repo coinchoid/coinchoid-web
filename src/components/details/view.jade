@@ -3,6 +3,7 @@ md-bottom-sheet.md-list
     tr
       th(width="50%") Nous
       th(width="50%") Eux
-    tr(ng-repeat="partie in parties")
+      th
+    tr(ng-repeat="partie in parties" ng-click="edit($index, $event)")
       td(width="50%") {{ partie.nous }}
       td(width="50%") {{ partie.eux }}

@@ -32,6 +32,23 @@ angular.module('Coinchoid').config(function($stateProvider) {
   });
 });
 
+angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdDialog, Parties, $state) {
+  $scope.toggleSidenav = function() {
+    return $mdSidenav('left').toggle();
+  };
+  $scope.openDetails = function() {
+    return $mdBottomSheet.show({
+      templateUrl: 'components/details/view.html',
+      controller: 'ResultatsCtrl'
+    });
+  };
+  return $scope.reset = function(ev) {
+    var confirm;
+    confirm = $mdDialog.confirm().title('Nouvelle partie').ariaLabel('Nouvelle partie ?').targetEvent(ev).ok('Oui !').cancel('Annuler');
+    return $mdDialog.show(confirm).then(Parties.reset);
+  };
+});
+
 angular.module('Coinchoid').service('Parties', function(localStorageService, $rootScope) {
   var getCumulativeScore, parties;
   parties = localStorageService.get('results') || [];
@@ -78,8 +95,18 @@ angular.module('Coinchoid').service('Parties', function(localStorageService, $ro
       return $rootScope.$broadcast('score:change');
     },
     getCumulativeScore: getCumulativeScore,
-    get: function() {
-      return parties;
+    editScore: function(index, nous, eux) {
+      parties[index] = {
+        nous: parseInt(nous),
+        eux: parseInt(eux)
+      };
+      return $rootScope.$broadcast('score:change');
+    },
+    get: function(index) {
+      if (!index) {
+        parties;
+      }
+      return parties[index];
     },
     reset: function() {
       parties = [];
@@ -96,49 +123,33 @@ angular.module('Coinchoid').service('Parties', function(localStorageService, $ro
   };
 });
 
-angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdDialog, Parties, $state) {
-  $scope.toggleSidenav = function() {
-    return $mdSidenav('left').toggle();
-  };
-  $scope.openDetails = function() {
-    return $mdBottomSheet.show({
-      templateUrl: 'components/details/view.html',
-      controller: 'ResultatsCtrl'
+angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, $mdDialog, $mdBottomSheet, Parties) {
+  $scope.parties = Parties.getCumulativeScore();
+  return $scope.edit = function(index, ev) {
+    $mdBottomSheet.hide();
+    return $mdDialog.show({
+      controller: 'editorCtrl',
+      templateUrl: 'components/editor/view.html',
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      resolve: {
+        index: function() {
+          return index - 1;
+        }
+      }
     });
   };
-  return $scope.reset = function(ev) {
-    var confirm;
-    confirm = $mdDialog.confirm().title('Nouvelle partie').ariaLabel('Nouvelle partie ?').targetEvent(ev).ok('Oui !').cancel('Annuler');
-    return $mdDialog.show(confirm).then(Parties.reset);
-  };
 });
 
-angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
-  $scope.firstRangeAnnonce = true;
-  $scope.annonce = 80;
-  $scope.bonus = 'NORMAL';
-  $scope.select = function(annonce) {
-    return $scope.annonce = annonce;
+angular.module('Coinchoid').controller('editorCtrl', function($scope, $mdDialog, index, Parties) {
+  $scope.result = Parties.get(index);
+  $scope.cancel = function() {
+    return $mdDialog.cancel();
   };
-  return $scope.toggleAnnonces = function() {
-    return $scope.firstRangeAnnonce = !$scope.firstRangeAnnonce;
+  return $scope.save = function(nous, eux) {
+    Parties.editScore(index, nous, eux);
+    return $mdDialog.hide();
   };
-});
-
-angular.module('Coinchoid').directive('pointSelector', function() {
-  return {
-    restrict: 'E',
-    templateUrl: 'components/point-selector/view.html',
-    scope: {
-      annonce: '=',
-      bonus: '='
-    },
-    controller: 'pointSelectorCtrl'
-  };
-});
-
-angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties) {
-  return $scope.parties = Parties.getCumulativeScore();
 });
 
 angular.module('Coinchoid').controller('infoCtrl', function($scope, annonce, Info) {
@@ -219,6 +230,30 @@ angular.module('Coinchoid').service('Info', function() {
       reussiSansAtout: 130,
       reussiToutAtout: 262
     }
+  };
+});
+
+angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
+  $scope.firstRangeAnnonce = true;
+  $scope.annonce = 80;
+  $scope.bonus = 'NORMAL';
+  $scope.select = function(annonce) {
+    return $scope.annonce = annonce;
+  };
+  return $scope.toggleAnnonces = function() {
+    return $scope.firstRangeAnnonce = !$scope.firstRangeAnnonce;
+  };
+});
+
+angular.module('Coinchoid').directive('pointSelector', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'components/point-selector/view.html',
+    scope: {
+      annonce: '=',
+      bonus: '='
+    },
+    controller: 'pointSelectorCtrl'
   };
 });
 

@@ -43,6 +43,11 @@ md-grid-tile.md-accent {
   outline: none !important;
 }
 
+.results {
+  width: 100%;
+  text-align: center;
+}
+
 point-selector md-radio-button {
   margin-left: 10px !important;
 }
@@ -54,9 +59,4 @@ point-selector .coinche {
 }
 point-selector .coinche .options:focus {
   outline: none;
-}
-
-.results {
-  width: 100%;
-  text-align: center;
 }

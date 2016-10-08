@@ -36,9 +36,14 @@ angular.module 'Coinchoid'
 
 
   getCumulativeScore: getCumulativeScore
-
-  get: ->
-    parties
+  editScore: (index, nous, eux) ->
+    parties[index] =
+      nous: parseInt nous
+      eux: parseInt eux
+    $rootScope.$broadcast('score:change')
+  get: (index) ->
+    parties unless index
+    parties[index]
   reset: ->
     parties = []
     localStorageService.set('results', [])
