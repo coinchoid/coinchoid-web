@@ -9,7 +9,11 @@ gulp.task 'coffee-public', (done) ->
 
   .pipe coffee
     bare: true
-  .pipe addsrc ["#{__dirname}/../src/**/*.js", "!#{__dirname}/../src/**/*test.js"]
+  .pipe addsrc [
+    "#{__dirname}/../src/**/*.js",
+    "!#{__dirname}/../src/**/*test.js",
+    "!#{__dirname}/../src/assets/sw.js"
+  ]
   .pipe concat 'app.js'
   .on 'error', gutil.log
   .pipe gulp.dest "#{__dirname}/../public/js/"
