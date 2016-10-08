@@ -1,8 +1,14 @@
 angular.module 'Coinchoid'
-.controller 'NavCtrl', ($scope, $mdSidenav, $mdDialog, Parties, $state) ->
+.controller 'NavCtrl', ($scope, $mdSidenav, $mdBottomSheet, $mdDialog, Parties, $state) ->
 
   $scope.toggleSidenav = ->
     $mdSidenav('left').toggle()
+
+  $scope.openDetails = ->
+    $mdBottomSheet.show({
+      templateUrl: 'components/details/view.html',
+      controller: 'ResultatsCtrl'
+    })
 
   $scope.reset = (ev) ->
     confirm = $mdDialog

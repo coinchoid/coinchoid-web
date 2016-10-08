@@ -4,6 +4,12 @@
 .main {
   height: calc(50hv);
 }
+.main {
+  height: calc(50hv);
+}
+.container {
+  height: 100hv;
+}
 h3 {
   text-align: center;
 }
@@ -27,6 +33,15 @@ md-sidenav .header .title {
   bottom: 0;
   width: 100%;
 }
+md-grid-tile.md-primary {
+  background-color: #cddc39;
+}
+md-grid-tile.md-accent {
+  background-color: #b0bec5;
+}
+:focus {
+  outline: none !important;
+}
 
 .results {
   width: 100%;
@@ -38,12 +53,6 @@ point-selector md-radio-button {
 }
 point-selector .options {
   padding: 20px;
-}
-point-selector md-grid-tile.md-primary {
-  background-color: #cddc39;
-}
-point-selector md-grid-tile.md-accent {
-  background-color: #b0bec5;
 }
 point-selector .coinche {
   margin-top: 10px;

@@ -1,5 +1,5 @@
 angular.module 'Coinchoid'
-.controller 'DonneCtrl', ($scope, $mdBottomSheet, $mdDialog, Parties) ->
+.controller 'DonneCtrl', ($scope, $mdDialog, Parties) ->
   $scope.team = 'NOUS'
 
   $scope.ok = (team, annonce, bonus) ->
@@ -11,12 +11,6 @@ angular.module 'Coinchoid'
       Parties.addScore('EUX', annonce, bonus)
     else
       Parties.addScore('NOUS', annonce, bonus)
-
-  $scope.openDetails = ->
-    $mdBottomSheet.show({
-      templateUrl: 'components/details/view.html',
-      controller: 'ResultatsCtrl'
-    })
 
   $scope.openInfo = (annonce, ev) ->
     $mdDialog.show({

@@ -96,19 +96,21 @@ angular.module('Coinchoid').service('Parties', function(localStorageService, $ro
   };
 });
 
-angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdDialog, Parties, $state) {
+angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdDialog, Parties, $state) {
   $scope.toggleSidenav = function() {
     return $mdSidenav('left').toggle();
+  };
+  $scope.openDetails = function() {
+    return $mdBottomSheet.show({
+      templateUrl: 'components/details/view.html',
+      controller: 'ResultatsCtrl'
+    });
   };
   return $scope.reset = function(ev) {
     var confirm;
     confirm = $mdDialog.confirm().title('Nouvelle partie').ariaLabel('Nouvelle partie ?').targetEvent(ev).ok('Oui !').cancel('Annuler');
     return $mdDialog.show(confirm).then(Parties.reset);
   };
-});
-
-angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties) {
-  return $scope.parties = Parties.getCumulativeScore();
 });
 
 angular.module('Coinchoid').controller('infoCtrl', function($scope, annonce, Info) {
@@ -192,6 +194,10 @@ angular.module('Coinchoid').service('Info', function() {
   };
 });
 
+angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties) {
+  return $scope.parties = Parties.getCumulativeScore();
+});
+
 angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
   $scope.firstRangeAnnonce = true;
   $scope.annonce = 80;
@@ -231,7 +237,7 @@ angular.module('Coinchoid').directive('score', function() {
   };
 });
 
-angular.module('Coinchoid').controller('DonneCtrl', function($scope, $mdBottomSheet, $mdDialog, Parties) {
+angular.module('Coinchoid').controller('DonneCtrl', function($scope, $mdDialog, Parties) {
   $scope.team = 'NOUS';
   $scope.ok = function(team, annonce, bonus) {
     Parties.addScore(team, annonce, bonus);
@@ -243,12 +249,6 @@ angular.module('Coinchoid').controller('DonneCtrl', function($scope, $mdBottomSh
     } else {
       return Parties.addScore('NOUS', annonce, bonus);
     }
-  };
-  $scope.openDetails = function() {
-    return $mdBottomSheet.show({
-      templateUrl: 'components/details/view.html',
-      controller: 'ResultatsCtrl'
-    });
   };
   return $scope.openInfo = function(annonce, ev) {
     return $mdDialog.show({
