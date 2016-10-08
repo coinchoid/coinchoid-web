@@ -246,7 +246,8 @@ angular.module('Coinchoid').directive('pointSelector', function() {
     restrict: 'E',
     templateUrl: 'components/point-selector/view.html',
     scope: {
-      annonce: '='
+      annonce: '=',
+      bonus: '='
     },
     controller: 'pointSelectorCtrl'
   };
