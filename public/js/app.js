@@ -120,7 +120,8 @@ angular.module('Coinchoid').service('Parties', function(localStorageService, $ro
     },
     reset: function() {
       parties = [];
-      return localStorageService.set('results', []);
+      localStorageService.set('results', []);
+      return $rootScope.$broadcast('score:change');
     },
     getScore: (function(_this) {
       return function() {
@@ -132,21 +133,15 @@ angular.module('Coinchoid').service('Parties', function(localStorageService, $ro
   };
 });
 
-angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, Parties, $state) {
+angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdDialog, Parties, $state) {
   $scope.toggleSidenav = function() {
     return $mdSidenav('left').toggle();
   };
-  return $scope.reset = function() {
-    Parties.reset();
-    $state.go('nav.annonce', {}, {
-      reload: true
-    });
-    return $mdSidenav('left').toggle();
+  return $scope.reset = function(ev) {
+    var confirm;
+    confirm = $mdDialog.confirm().title('Nouvelle partie').ariaLabel('Nouvelle partie ?').targetEvent(ev).ok('Oui !').cancel('Annuler');
+    return $mdDialog.show(confirm).then(Parties.reset);
   };
-});
-
-angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties) {
-  return $scope.parties = Parties.getCumulativeScore();
 });
 
 angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
@@ -170,6 +165,10 @@ angular.module('Coinchoid').directive('pointSelector', function() {
     },
     controller: 'pointSelectorCtrl'
   };
+});
+
+angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties) {
+  return $scope.parties = Parties.getCumulativeScore();
 });
 
 angular.module('Coinchoid').controller('scoreCtrl', function($scope, $rootScope, Parties) {

@@ -42,6 +42,7 @@ angular.module 'Coinchoid'
   reset: ->
     parties = []
     localStorageService.set('results', [])
+    $rootScope.$broadcast('score:change')
   getScore: =>
     [..., last] = getCumulativeScore()
     return last
