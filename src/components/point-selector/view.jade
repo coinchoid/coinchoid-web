@@ -1,15 +1,42 @@
-div(ng-if="firstRangeAnnonce")
-  md-button.md-raised(
+md-grid-list(
+  md-cols='4'
+  md-row-height='1:1'
+  md-gutter='1px'
+)
+  md-grid-tile(
+    ng-if="firstRangeAnnonce"
     ng-repeat="value in [80, 90, 100, 110, 120, 130, 140]"
     ng-click="select(value)"
-    ng-class="{'md-primary': value === annonce}"
-  ) {{value}}
-  md-button.md-raised(ng-click="toggleAnnonces()") ->
+    ng-class="{'md-primary': value === annonce, 'md-accent': value !== annonce}"
+  )
+    h3 {{value}}
+  md-grid-tile.md-accent(
+    ng-if="firstRangeAnnonce"
+    ng-click="toggleAnnonces()"
+  )
+    md-icon(md-svg-icon="arrow-right-bold")
 
-div(ng-if="!firstRangeAnnonce")
-  md-button.md-raised(ng-click="toggleAnnonces()") <-
-  md-button.md-raised(
+  md-grid-tile.md-accent(
+  ng-if="!firstRangeAnnonce"
+  ng-click="toggleAnnonces()"
+  )
+    md-icon(md-svg-icon="arrow-left-bold")
+  md-grid-tile(
+    ng-if="!firstRangeAnnonce"
     ng-repeat="value in [150, 160, 170, 180, 250]"
     ng-click="select(value)"
-    ng-class="{'md-primary': value === annonce}"
-  ) {{value === 250 ? 'capot' : value }}
+    ng-class="{'md-primary': value === annonce, 'md-accent': value !== annonce}"
+  )
+    h3 {{value === 250 ? 'capot' : value }}
+
+div.coinche
+  md-radio-group(ng-model='bonus' flex layout="row")
+    div.options(flex layout="column" layout-align="center center" ng-click="bonus = 'NORMAL'")
+      md-radio-button.md-primary(value='NORMAL' aria-label="normal")
+      div Normal
+    div.options(flex layout="column" layout-align="center center" ng-click="bonus = 'COINCHE'")
+      md-radio-button.md-primary(value='COINCHE' aria-label="coinche")
+      div Coinché 
+    div.options(flex layout="column" layout-align="center center" ng-click="bonus = 'SURCOINCHE'")
+      md-radio-button.md-primary(value='SURCOINCHE' aria-label="surcoinche")
+      div Surcoinché

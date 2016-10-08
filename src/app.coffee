@@ -27,3 +27,8 @@ app.config (localStorageServiceProvider) ->
 app.config ($mdIconProvider) ->
   $mdIconProvider
     .defaultIconSet 'images/icons/mdi.light.svg'
+
+app.config ($mdThemingProvider) ->
+  $mdThemingProvider.theme('default')
+    .primaryPalette('lime')
+    .accentPalette('blue-grey')

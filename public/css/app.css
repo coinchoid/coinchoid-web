@@ -1,6 +1,28 @@
 .container {
-  padding: 20px;
+  width: 100%;
 }
 .main {
   height: calc(50hv);
+}
+h3 {
+  text-align: center;
+}
+
+point-selector md-radio-button {
+  margin-left: 10px !important;
+}
+point-selector .options {
+  padding: 20px;
+}
+point-selector md-grid-tile.md-primary {
+  background-color: #cddc39;
+}
+point-selector md-grid-tile.md-accent {
+  background-color: #b0bec5;
+}
+point-selector .coinche {
+  margin-top: 10px;
+}
+point-selector .coinche .options:focus {
+  outline: none;
 }

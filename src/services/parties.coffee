@@ -1,5 +1,5 @@
 angular.module 'Coinchoid'
-.service 'Parties', (localStorageService) ->
+.service 'Parties', (localStorageService, $rootScope) ->
   parties = localStorageService.get('results') or []
 
   getCumulativeScore = ->
@@ -32,6 +32,8 @@ angular.module 'Coinchoid'
         eux: score
       }
     localStorageService.set('results', parties)
+    $rootScope.$broadcast('score:change')
+
 
   getCumulativeScore: getCumulativeScore
 

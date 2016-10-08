@@ -16,6 +16,10 @@ app.config(function($mdIconProvider) {
   return $mdIconProvider.defaultIconSet('images/icons/mdi.light.svg');
 });
 
+app.config(function($mdThemingProvider) {
+  return $mdThemingProvider.theme('default').primaryPalette('lime').accentPalette('blue-grey');
+});
+
 
 self.addEventListener('install', e => {
   e.waitUntil(
@@ -69,7 +73,24 @@ angular.module('Coinchoid').config(function($stateProvider) {
   });
 });
 
-angular.module('Coinchoid').service('Parties', function(localStorageService) {
+angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, Parties, $state) {
+  $scope.toggleSidenav = function() {
+    return $mdSidenav('left').toggle();
+  };
+  $scope.reset = function() {
+    Parties.reset();
+    $state.go('nav.annonce', {}, {
+      reload: true
+    });
+    return $mdSidenav('left').toggle();
+  };
+  return $scope.goToDetails = function() {
+    $mdSidenav('left').toggle();
+    return $state.go('nav.resultats');
+  };
+});
+
+angular.module('Coinchoid').service('Parties', function(localStorageService, $rootScope) {
   var getCumulativeScore, parties;
   parties = localStorageService.get('results') || [];
   getCumulativeScore = function() {
@@ -111,7 +132,8 @@ angular.module('Coinchoid').service('Parties', function(localStorageService) {
           eux: score
         });
       }
-      return localStorageService.set('results', parties);
+      localStorageService.set('results', parties);
+      return $rootScope.$broadcast('score:change');
     },
     getCumulativeScore: getCumulativeScore,
     get: function() {
@@ -131,26 +153,10 @@ angular.module('Coinchoid').service('Parties', function(localStorageService) {
   };
 });
 
-angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, Parties, $state) {
-  $scope.toggleSidenav = function() {
-    return $mdSidenav('left').toggle();
-  };
-  $scope.reset = function() {
-    Parties.reset();
-    $state.go('nav.annonce', {}, {
-      reload: true
-    });
-    return $mdSidenav('left').toggle();
-  };
-  return $scope.goToDetails = function() {
-    $mdSidenav('left').toggle();
-    return $state.go('nav.resultats');
-  };
-});
-
 angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
   $scope.firstRangeAnnonce = true;
   $scope.annonce = 80;
+  $scope.bonus = 'NORMAL';
   $scope.select = function(annonce) {
     return $scope.annonce = annonce;
   };
@@ -170,23 +176,19 @@ angular.module('Coinchoid').directive('pointSelector', function() {
   };
 });
 
-angular.module('Coinchoid').controller('DonneCtrl', function($scope, $state, Parties) {
-  $scope.annonce = 80;
-  $scope.bonus = 'NORMAL';
-  $scope.team = 'NOUS';
-  $scope.ok = function(team, annonce, bonus) {
-    Parties.addScore(team, annonce, bonus);
+angular.module('Coinchoid').controller('scoreCtrl', function($scope, $rootScope, Parties) {
+  $scope.score = Parties.getScore();
+  return $rootScope.$on('score:change', function() {
     return $scope.score = Parties.getScore();
+  });
+});
+
+angular.module('Coinchoid').directive('score', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'components/scores/view.html',
+    controller: 'scoreCtrl'
   };
-  $scope.ko = function(team, annonce, bonus) {
-    if (team === 'NOUS') {
-      Parties.addScore('EUX', annonce, bonus);
-    } else {
-      Parties.addScore('NOUS', annonce, bonus);
-    }
-    return $scope.score = Parties.getScore();
-  };
-  return $scope.score = Parties.getScore();
 });
 
 angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties, $state) {
@@ -194,5 +196,20 @@ angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties
   return $scope.reset = function() {
     Parties.reset();
     return $state.go('annonce');
+  };
+});
+
+angular.module('Coinchoid').controller('DonneCtrl', function($scope, $state, Parties) {
+  $scope.team = 'NOUS';
+  $scope.ok = function(team, annonce, bonus) {
+    Parties.addScore(team, annonce, bonus);
+    return $scope.score = Parties.getScore();
+  };
+  return $scope.ko = function(team, annonce, bonus) {
+    if (team === 'NOUS') {
+      return Parties.addScore('EUX', annonce, bonus);
+    } else {
+      return Parties.addScore('NOUS', annonce, bonus);
+    }
   };
 });

@@ -1,9 +1,8 @@
-md-toolbar.md-hue-2
+md-toolbar
   .md-toolbar-tools
     md-button.md-icon-button(aria-label='Settings' ng-click="toggleSidenav()")
       md-icon(md-svg-icon='menu')
-    h2
-      span Coinchoid
+    score
 
 div.main(flex layout="row")
   md-sidenav.md-sidenav-left.md-whiteframe-z2(
@@ -13,5 +12,5 @@ div.main(flex layout="row")
     md-list
       md-list-item(ng-click="reset()") Nouvelle Partie
       md-list-item(ng-click="goToDetails()") Détails de la partie
-  main.md-padding(layout="row" flex)
+  main(layout="row" flex)
     .container(ui-view)
