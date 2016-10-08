@@ -113,6 +113,34 @@ angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $
   };
 });
 
+angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
+  $scope.firstRangeAnnonce = true;
+  $scope.annonce = 80;
+  $scope.bonus = 'NORMAL';
+  $scope.select = function(annonce) {
+    return $scope.annonce = annonce;
+  };
+  return $scope.toggleAnnonces = function() {
+    return $scope.firstRangeAnnonce = !$scope.firstRangeAnnonce;
+  };
+});
+
+angular.module('Coinchoid').directive('pointSelector', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'components/point-selector/view.html',
+    scope: {
+      annonce: '=',
+      bonus: '='
+    },
+    controller: 'pointSelectorCtrl'
+  };
+});
+
+angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties) {
+  return $scope.parties = Parties.getCumulativeScore();
+});
+
 angular.module('Coinchoid').controller('infoCtrl', function($scope, annonce, Info) {
   return $scope.annonce = Info[annonce];
 });
@@ -194,34 +222,6 @@ angular.module('Coinchoid').service('Info', function() {
   };
 });
 
-angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties) {
-  return $scope.parties = Parties.getCumulativeScore();
-});
-
-angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
-  $scope.firstRangeAnnonce = true;
-  $scope.annonce = 80;
-  $scope.bonus = 'NORMAL';
-  $scope.select = function(annonce) {
-    return $scope.annonce = annonce;
-  };
-  return $scope.toggleAnnonces = function() {
-    return $scope.firstRangeAnnonce = !$scope.firstRangeAnnonce;
-  };
-});
-
-angular.module('Coinchoid').directive('pointSelector', function() {
-  return {
-    restrict: 'E',
-    templateUrl: 'components/point-selector/view.html',
-    scope: {
-      annonce: '=',
-      bonus: '='
-    },
-    controller: 'pointSelectorCtrl'
-  };
-});
-
 angular.module('Coinchoid').controller('scoreCtrl', function($scope, $rootScope, Parties) {
   $scope.score = Parties.getScore();
   return $rootScope.$on('score:change', function() {
@@ -238,17 +238,24 @@ angular.module('Coinchoid').directive('score', function() {
 });
 
 angular.module('Coinchoid').controller('DonneCtrl', function($scope, $mdDialog, Parties) {
+  var reset;
   $scope.team = 'NOUS';
+  reset = function() {
+    $scope.annonce = 80;
+    return $scope.bonus = 'NORMAL';
+  };
   $scope.ok = function(team, annonce, bonus) {
     Parties.addScore(team, annonce, bonus);
-    return $scope.score = Parties.getScore();
+    $scope.score = Parties.getScore();
+    return reset();
   };
   $scope.ko = function(team, annonce, bonus) {
     if (team === 'NOUS') {
-      return Parties.addScore('EUX', annonce, bonus);
+      Parties.addScore('EUX', annonce, bonus);
     } else {
-      return Parties.addScore('NOUS', annonce, bonus);
+      Parties.addScore('NOUS', annonce, bonus);
     }
+    return reset();
   };
   return $scope.openInfo = function(annonce, ev) {
     return $mdDialog.show({
