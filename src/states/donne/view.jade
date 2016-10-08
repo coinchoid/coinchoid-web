@@ -14,8 +14,10 @@ h3 Résultat
 
 div(flex layout="row" layout-align="space-around center")
   md-button.md-raised.md-primary(ng-click="ok(team, annonce, bonus)") C'est fait !
+  md-button.md-icon-button(ng-click="openInfo(annonce, $event)")
+    md-icon(md-svg-icon="information-outline")
   md-button.md-raised.md-accent(ng-click="ko(team, annonce, bonus)") C'est chu !
 
 div.bottom-sheet-call(flex layout="row" layout-align="center end")
-  md-button.md-icon-button(ng-click="openDetails()")
+  md-button.md-icon-button(ng-click="openDetails($event)")
     md-icon(md-svg-icon="chevron-double-up")

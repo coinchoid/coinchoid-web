@@ -144,6 +144,91 @@ angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $
   };
 });
 
+angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties) {
+  return $scope.parties = Parties.getCumulativeScore();
+});
+
+angular.module('Coinchoid').controller('infoCtrl', function($scope, annonce, Info) {
+  return $scope.annonce = Info[annonce];
+});
+
+angular.module('Coinchoid').service('Info', function() {
+  return {
+    80: {
+      chuSansAtout: 66,
+      chuToutAtout: 133,
+      reussiSansAtout: 65,
+      reussiToutAtout: 130
+    },
+    90: {
+      chuSansAtout: 58,
+      chuToutAtout: 117,
+      reussiSansAtout: 73,
+      reussiToutAtout: 146
+    },
+    100: {
+      chuSansAtout: 50,
+      chuToutAtout: 101,
+      reussiSansAtout: 81,
+      reussiToutAtout: 162
+    },
+    110: {
+      chuSansAtout: 42,
+      chuToutAtout: 85,
+      reussiSansAtout: 89,
+      reussiToutAtout: 178
+    },
+    120: {
+      chuSansAtout: 34,
+      chuToutAtout: 68,
+      reussiSansAtout: 97,
+      reussiToutAtout: 195
+    },
+    130: {
+      chuSansAtout: 26,
+      chuToutAtout: 52,
+      reussiSansAtout: 105,
+      reussiToutAtout: 211
+    },
+    140: {
+      chuSansAtout: 18,
+      chuToutAtout: 36,
+      reussiSansAtout: 113,
+      reussiToutAtout: 227
+    },
+    150: {
+      chuSansAtout: 10,
+      chuToutAtout: 20,
+      reussiSansAtout: 121,
+      reussiToutAtout: 243
+    },
+    150: {
+      chuSansAtout: 2,
+      chuToutAtout: 4,
+      reussiSansAtout: 129,
+      reussiToutAtout: 259
+    },
+    170: {
+      chuSansAtout: 1,
+      chuToutAtout: 1,
+      reussiSansAtout: 130,
+      reussiToutAtout: 262
+    },
+    180: {
+      chuSansAtout: 1,
+      chuToutAtout: 1,
+      reussiSansAtout: 130,
+      reussiToutAtout: 262
+    },
+    capot: {
+      chuSansAtout: 1,
+      chuToutAtout: 1,
+      reussiSansAtout: 130,
+      reussiToutAtout: 262
+    }
+  };
+});
+
 angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
   $scope.firstRangeAnnonce = true;
   $scope.annonce = 80;
@@ -167,10 +252,6 @@ angular.module('Coinchoid').directive('pointSelector', function() {
   };
 });
 
-angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, Parties) {
-  return $scope.parties = Parties.getCumulativeScore();
-});
-
 angular.module('Coinchoid').controller('scoreCtrl', function($scope, $rootScope, Parties) {
   $scope.score = Parties.getScore();
   return $rootScope.$on('score:change', function() {
@@ -186,7 +267,7 @@ angular.module('Coinchoid').directive('score', function() {
   };
 });
 
-angular.module('Coinchoid').controller('DonneCtrl', function($scope, $mdBottomSheet, Parties) {
+angular.module('Coinchoid').controller('DonneCtrl', function($scope, $mdBottomSheet, $mdDialog, Parties) {
   $scope.team = 'NOUS';
   $scope.ok = function(team, annonce, bonus) {
     Parties.addScore(team, annonce, bonus);
@@ -199,10 +280,23 @@ angular.module('Coinchoid').controller('DonneCtrl', function($scope, $mdBottomSh
       return Parties.addScore('NOUS', annonce, bonus);
     }
   };
-  return $scope.openDetails = function() {
+  $scope.openDetails = function() {
     return $mdBottomSheet.show({
       templateUrl: 'components/details/view.html',
       controller: 'ResultatsCtrl'
+    });
+  };
+  return $scope.openInfo = function(annonce, ev) {
+    return $mdDialog.show({
+      controller: 'infoCtrl',
+      templateUrl: 'components/info/view.html',
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      resolve: {
+        annonce: function() {
+          return annonce;
+        }
+      }
     });
   };
 });
