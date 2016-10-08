@@ -12,8 +12,7 @@ div.main(flex layout="row")
       .md-toolbar-tools
         //- md-button.md-icon-button(aria-label='Settings' ng-click="toggleSidenav()")
         //-   md-icon(md-svg-icon='menu')
-        score
-        div(flex)
+        score(flex="grow")
         md-button.md-icon-button(aria-label='Restart' ng-click="reset()")
           md-icon(md-svg-icon='reload')
     .container(ui-view)
