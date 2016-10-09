@@ -32,23 +32,6 @@ angular.module('Coinchoid').config(function($stateProvider) {
   });
 });
 
-angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdDialog, Parties, $state) {
-  $scope.toggleSidenav = function() {
-    return $mdSidenav('left').toggle();
-  };
-  $scope.openDetails = function() {
-    return $mdBottomSheet.show({
-      templateUrl: 'components/details/view.html',
-      controller: 'ResultatsCtrl'
-    });
-  };
-  return $scope.reset = function(ev) {
-    var confirm;
-    confirm = $mdDialog.confirm().title('Nouvelle partie').ariaLabel('Nouvelle partie ?').targetEvent(ev).ok('Oui !').cancel('Annuler');
-    return $mdDialog.show(confirm).then(Parties.reset);
-  };
-});
-
 angular.module('Coinchoid').service('Parties', function(localStorageService, $rootScope) {
   var getCumulativeScore, parties;
   parties = localStorageService.get('results') || [];
@@ -120,6 +103,23 @@ angular.module('Coinchoid').service('Parties', function(localStorageService, $ro
         return last;
       };
     })(this)
+  };
+});
+
+angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdDialog, Parties, $state) {
+  $scope.toggleSidenav = function() {
+    return $mdSidenav('left').toggle();
+  };
+  $scope.openDetails = function() {
+    return $mdBottomSheet.show({
+      templateUrl: 'components/details/view.html',
+      controller: 'ResultatsCtrl'
+    });
+  };
+  return $scope.reset = function(ev) {
+    var confirm;
+    confirm = $mdDialog.confirm().title('Nouvelle partie').ariaLabel('Nouvelle partie ?').targetEvent(ev).ok('Oui !').cancel('Annuler');
+    return $mdDialog.show(confirm).then(Parties.reset);
   };
 });
 
