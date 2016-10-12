@@ -7,7 +7,7 @@ self.addEventListener('install', e => {
         '/index.html',
         '/css/vendor.css',
         '/css/app.css',
-        'images/icons/mdi.light.svg',
+        '/images/icons/mdi.light.svg',
         '/images/icons/icon.svg',
         '/images/icons/icon-256x256.png',
         '/images/icons/icon-192x192.png',
