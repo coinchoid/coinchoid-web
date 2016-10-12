@@ -20,6 +20,38 @@ app.config(function($mdThemingProvider) {
   return $mdThemingProvider.theme('default').primaryPalette('lime').accentPalette('blue-grey');
 });
 
+window.addEventListener('load', function() { 
+
+  var maybePreventPullToRefresh = false; 
+  var lastTouchY = 0; 
+  var touchstartHandler = function(e) { 
+    if (e.touches.length != 1) return; 
+    lastTouchY = e.touches[0].clientY; 
+    // Pull-to-refresh will only trigger if the scroll begins when the 
+    // document's Y offset is zero. 
+    maybePreventPullToRefresh = window.pageYOffset == 0; 
+  } 
+
+  var touchmoveHandler = function(e) { 
+    var touchY = e.touches[0].clientY; 
+    var touchYDelta = touchY - lastTouchY; 
+    lastTouchY = touchY; 
+
+    if (maybePreventPullToRefresh) { 
+      // To suppress pull-to-refresh it is sufficient to preventDefault the 
+      // first overscrolling touchmove. 
+      maybePreventPullToRefresh = false; 
+      if (touchYDelta > 0) { 
+        e.preventDefault(); 
+        return; 
+      } 
+    } 
+  } 
+
+  document.addEventListener('touchstart', touchstartHandler, false); 
+  document.addEventListener('touchmove', touchmoveHandler, false); 
+}); 
+
 angular.module('Coinchoid').config(function($stateProvider) {
   return $stateProvider.state('nav', {
     abstract: true,
@@ -152,6 +184,30 @@ angular.module('Coinchoid').controller('editorCtrl', function($scope, $mdDialog,
   };
 });
 
+angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
+  $scope.firstRangeAnnonce = true;
+  $scope.annonce = 80;
+  $scope.bonus = 'NORMAL';
+  $scope.select = function(annonce) {
+    return $scope.annonce = annonce;
+  };
+  return $scope.toggleAnnonces = function() {
+    return $scope.firstRangeAnnonce = !$scope.firstRangeAnnonce;
+  };
+});
+
+angular.module('Coinchoid').directive('pointSelector', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'components/point-selector/view.html',
+    scope: {
+      annonce: '=',
+      bonus: '='
+    },
+    controller: 'pointSelectorCtrl'
+  };
+});
+
 angular.module('Coinchoid').controller('infoCtrl', function($scope, annonce, Info) {
   return $scope.annonce = Info[annonce];
 });
@@ -230,30 +286,6 @@ angular.module('Coinchoid').service('Info', function() {
       reussiSansAtout: 130,
       reussiToutAtout: 262
     }
-  };
-});
-
-angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
-  $scope.firstRangeAnnonce = true;
-  $scope.annonce = 80;
-  $scope.bonus = 'NORMAL';
-  $scope.select = function(annonce) {
-    return $scope.annonce = annonce;
-  };
-  return $scope.toggleAnnonces = function() {
-    return $scope.firstRangeAnnonce = !$scope.firstRangeAnnonce;
-  };
-});
-
-angular.module('Coinchoid').directive('pointSelector', function() {
-  return {
-    restrict: 'E',
-    templateUrl: 'components/point-selector/view.html',
-    scope: {
-      annonce: '=',
-      bonus: '='
-    },
-    controller: 'pointSelectorCtrl'
   };
 });
 
