@@ -1,7 +1,9 @@
 
+var current_version = 'coinchoid-v1';
+
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open('coinchoid').then(cache => {
+    caches.open(current_version).then(cache => {
       return cache.addAll([
         '/',
         '/index.html',
@@ -21,6 +23,20 @@ self.addEventListener('install', e => {
       .then(() => self.skipWaiting());
     })
   )
+});
+
+self.addEventListener('activate', function(event) {
+    var cacheWhitelist = [current_version];
+
+    event.waitUntil(
+        caches.keys().then(function(keyList) {
+            return Promise.all(keyList.map(function(key) {
+                if (cacheWhitelist.indexOf(key) === -1) {
+                    return caches.delete(keyList[i]);
+                }
+            }));
+        })
+    );
 });
 
 self.addEventListener('activate',  event => {
