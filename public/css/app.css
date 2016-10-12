@@ -45,6 +45,12 @@ md-grid-tile.md-accent {
 :focus {
   outline: none !important;
 }
+.unselectable {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
 
 .results {
   width: 100%;
