@@ -32,7 +32,7 @@ self.addEventListener('activate', function(event) {
         caches.keys().then(function(keyList) {
             return Promise.all(keyList.map(function(key) {
                 if (cacheWhitelist.indexOf(key) === -1) {
-                    return caches.delete(keyList[key]);
+                    return caches.delete(key);
                 }
             }));
         })
