@@ -1,3 +1,25 @@
+'use strict';
+var app;
+
+app = angular.module('Coinchoid', ['ng', 'ngResource', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.router', 'app.templates', 'LocalStorageModule']);
+
+app.config(function($locationProvider, $urlRouterProvider) {
+  $locationProvider.hashPrefix('!');
+  return $urlRouterProvider.otherwise('/');
+});
+
+app.config(function(localStorageServiceProvider) {
+  return localStorageServiceProvider.setPrefix('');
+});
+
+app.config(function($mdIconProvider) {
+  return $mdIconProvider.defaultIconSet('images/icons/mdi.light.svg');
+});
+
+app.config(function($mdThemingProvider) {
+  return $mdThemingProvider.theme('default').primaryPalette('lime').accentPalette('blue-grey');
+});
+
 window.addEventListener('load', function() { 
 
   var maybePreventPullToRefresh = false; 
@@ -29,28 +51,6 @@ window.addEventListener('load', function() {
   document.addEventListener('touchstart', touchstartHandler, false); 
   document.addEventListener('touchmove', touchmoveHandler, false); 
 }); 
-
-'use strict';
-var app;
-
-app = angular.module('Coinchoid', ['ng', 'ngResource', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.router', 'app.templates', 'LocalStorageModule']);
-
-app.config(function($locationProvider, $urlRouterProvider) {
-  $locationProvider.hashPrefix('!');
-  return $urlRouterProvider.otherwise('/');
-});
-
-app.config(function(localStorageServiceProvider) {
-  return localStorageServiceProvider.setPrefix('');
-});
-
-app.config(function($mdIconProvider) {
-  return $mdIconProvider.defaultIconSet('images/icons/mdi.light.svg');
-});
-
-app.config(function($mdThemingProvider) {
-  return $mdThemingProvider.theme('default').primaryPalette('lime').accentPalette('blue-grey');
-});
 
 angular.module('Coinchoid').config(function($stateProvider) {
   return $stateProvider.state('nav', {
