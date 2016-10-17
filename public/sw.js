@@ -1,5 +1,5 @@
 
-var current_version = 'coinchoid-v5';
+var current_version = 'coinchoid-v6';
 
 self.addEventListener('install', e => {
   e.waitUntil(
@@ -14,8 +14,13 @@ self.addEventListener('install', e => {
         '/images/icons/icon-256x256.png',
         '/images/icons/icon-192x192.png',
         '/images/icons/icon-152x152.png',
-        '/images/icons/icon-128x128.png',
         '/images/icons/icon-144x144.png',
+        '/images/icons/icon-128x128.png',
+        '/images/icons/icon-114x114.png',
+        '/images/icons/icon-72x72.png',
+        '/images/icons/icon-57x57.png',
+        '/images/icons/icon-32x32.png',
+        '/images/icons/icon-32x32.ico',
         '/js/templates.js',
         '/js/app.js',
         '/js/vendor.js'

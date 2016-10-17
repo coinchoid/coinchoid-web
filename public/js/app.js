@@ -265,21 +265,6 @@ angular.module('Coinchoid').service('Info', function() {
   };
 });
 
-angular.module('Coinchoid').controller('scoreCtrl', function($scope, $rootScope, Parties) {
-  $scope.score = Parties.getScore();
-  return $rootScope.$on('score:change', function() {
-    return $scope.score = Parties.getScore();
-  });
-});
-
-angular.module('Coinchoid').directive('score', function() {
-  return {
-    restrict: 'E',
-    templateUrl: 'components/scores/view.html',
-    controller: 'scoreCtrl'
-  };
-});
-
 angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
   $scope.firstRangeAnnonce = true;
   $scope.annonce = 80;
@@ -301,6 +286,21 @@ angular.module('Coinchoid').directive('pointSelector', function() {
       bonus: '='
     },
     controller: 'pointSelectorCtrl'
+  };
+});
+
+angular.module('Coinchoid').controller('scoreCtrl', function($scope, $rootScope, Parties) {
+  $scope.score = Parties.getScore();
+  return $rootScope.$on('score:change', function() {
+    return $scope.score = Parties.getScore();
+  });
+});
+
+angular.module('Coinchoid').directive('score', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'components/scores/view.html',
+    controller: 'scoreCtrl'
   };
 });
 
