@@ -54,35 +54,6 @@ window.addEventListener('load', function() {
   document.addEventListener('touchmove', touchmoveHandler, false); 
 }); 
 
-angular.module('Coinchoid').config(function($stateProvider) {
-  return $stateProvider.state('nav', {
-    abstract: true,
-    templateUrl: 'states/nav.html',
-    controller: 'NavCtrl'
-  }).state('nav.annonce', {
-    url: '/',
-    controller: 'DonneCtrl',
-    templateUrl: 'states/donne/view.html'
-  });
-});
-
-angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdDialog, Parties, $state) {
-  $scope.toggleSidenav = function() {
-    return $mdSidenav('left').toggle();
-  };
-  $scope.openDetails = function() {
-    return $mdBottomSheet.show({
-      templateUrl: 'components/details/view.html',
-      controller: 'ResultatsCtrl'
-    });
-  };
-  return $scope.reset = function(ev) {
-    var confirm;
-    confirm = $mdDialog.confirm().title('Nouvelle partie').ariaLabel('Nouvelle partie ?').targetEvent(ev).ok('Oui !').cancel('Annuler');
-    return $mdDialog.show(confirm).then(Parties.reset);
-  };
-});
-
 angular.module('Coinchoid').service('Parties', function(localStorageService, $rootScope) {
   var getCumulativeScore, parties;
   parties = localStorageService.get('results') || [];
@@ -157,6 +128,35 @@ angular.module('Coinchoid').service('Parties', function(localStorageService, $ro
   };
 });
 
+angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdDialog, Parties, $state) {
+  $scope.toggleSidenav = function() {
+    return $mdSidenav('left').toggle();
+  };
+  $scope.openDetails = function() {
+    return $mdBottomSheet.show({
+      templateUrl: 'components/details/view.html',
+      controller: 'ResultatsCtrl'
+    });
+  };
+  return $scope.reset = function(ev) {
+    var confirm;
+    confirm = $mdDialog.confirm().title('Nouvelle partie').ariaLabel('Nouvelle partie ?').targetEvent(ev).ok('Oui !').cancel('Annuler');
+    return $mdDialog.show(confirm).then(Parties.reset);
+  };
+});
+
+angular.module('Coinchoid').config(function($stateProvider) {
+  return $stateProvider.state('nav', {
+    abstract: true,
+    templateUrl: 'states/nav.html',
+    controller: 'NavCtrl'
+  }).state('nav.annonce', {
+    url: '/',
+    controller: 'DonneCtrl',
+    templateUrl: 'states/donne/view.html'
+  });
+});
+
 angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, $mdDialog, $mdBottomSheet, Parties) {
   $scope.parties = Parties.getCumulativeScore();
   return $scope.edit = function(index, ev) {
@@ -172,17 +172,6 @@ angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, $mdDial
         }
       }
     });
-  };
-});
-
-angular.module('Coinchoid').controller('editorCtrl', function($scope, $mdDialog, index, Parties) {
-  $scope.result = Parties.get(index);
-  $scope.cancel = function() {
-    return $mdDialog.cancel();
-  };
-  return $scope.save = function(nous, eux) {
-    Parties.editScore(index, nous, eux);
-    return $mdDialog.hide();
   };
 });
 
@@ -349,5 +338,16 @@ angular.module('Coinchoid').controller('DonneCtrl', function($scope, $mdDialog, 
         }
       }
     });
+  };
+});
+
+angular.module('Coinchoid').controller('editorCtrl', function($scope, $mdDialog, index, Parties) {
+  $scope.result = Parties.get(index);
+  $scope.cancel = function() {
+    return $mdDialog.cancel();
+  };
+  return $scope.save = function(nous, eux) {
+    Parties.editScore(index, nous, eux);
+    return $mdDialog.hide();
   };
 });
