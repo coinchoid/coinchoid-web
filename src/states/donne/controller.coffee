@@ -14,7 +14,7 @@ angular.module 'Coinchoid'
 
   $scope.ok = (team, annonce, bonus, ev) ->
     unless team?
-      $mdToast.show alert
+      return $mdToast.show alert
     Parties.addScore(team, annonce, bonus)
     $scope.score = Parties.getScore()
     reset()

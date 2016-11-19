@@ -3,10 +3,10 @@ md-dialog(aria-label='Editor')
     .md-dialog-content
       md-input-container
         label Nous
-        input(ng-model="result.nous")
+        input(ng-model="result.nous" type="number")
       md-input-container
         label Eux
-        input(ng-model="result.eux")
+        input(ng-model="result.eux" type="number")
   
   md-dialog-actions(layout='row')
     md-button(aria-label="cancel" ng-click="cancel()") Annuler

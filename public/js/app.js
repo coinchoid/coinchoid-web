@@ -265,21 +265,6 @@ angular.module('Coinchoid').service('Info', function() {
   };
 });
 
-angular.module('Coinchoid').controller('scoreCtrl', function($scope, $rootScope, Parties) {
-  $scope.score = Parties.getScore();
-  return $rootScope.$on('score:change', function() {
-    return $scope.score = Parties.getScore();
-  });
-});
-
-angular.module('Coinchoid').directive('score', function() {
-  return {
-    restrict: 'E',
-    templateUrl: 'components/scores/view.html',
-    controller: 'scoreCtrl'
-  };
-});
-
 angular.module('Coinchoid').controller('pointSelectorCtrl', function($scope) {
   $scope.firstRangeAnnonce = true;
   $scope.annonce = 80;
@@ -304,6 +289,21 @@ angular.module('Coinchoid').directive('pointSelector', function() {
   };
 });
 
+angular.module('Coinchoid').controller('scoreCtrl', function($scope, $rootScope, Parties) {
+  $scope.score = Parties.getScore();
+  return $rootScope.$on('score:change', function() {
+    return $scope.score = Parties.getScore();
+  });
+});
+
+angular.module('Coinchoid').directive('score', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'components/scores/view.html',
+    controller: 'scoreCtrl'
+  };
+});
+
 angular.module('Coinchoid').controller('DonneCtrl', function($scope, $mdDialog, $mdToast, Parties) {
   var alert, reset, teamAlert;
   $scope.team = null;
@@ -318,7 +318,7 @@ angular.module('Coinchoid').controller('DonneCtrl', function($scope, $mdDialog, 
   alert = $mdToast.simple().textContent('Qui a gagné ?');
   $scope.ok = function(team, annonce, bonus, ev) {
     if (team == null) {
-      $mdToast.show(alert);
+      return $mdToast.show(alert);
     }
     Parties.addScore(team, annonce, bonus);
     $scope.score = Parties.getScore();
