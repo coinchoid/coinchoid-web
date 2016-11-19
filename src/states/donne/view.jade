@@ -24,10 +24,10 @@ div(flex layout="column")
       md-gutter='1px'
     )
       md-grid-tile.md-raised.md-accent(
-        ng-click="ko(team, annonce, bonus)"
+        ng-click="ko(team, annonce, bonus, $event)"
       )
         h3 C'est chu !
       md-grid-tile.md-raised.md-primary(
-      ng-click="ok(team, annonce, bonus)"
+      ng-click="ok(team, annonce, bonus, $event)"
       )
         h3 C'est fait !
