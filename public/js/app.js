@@ -1,7 +1,7 @@
 'use strict';
 var app;
 
-app = angular.module('Coinchoid', ['ng', 'ngResource', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.router', 'app.templates', 'LocalStorageModule']);
+app = angular.module('Coinchoid', ['ng', 'ngResource', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ngTouch', 'ui.router', 'app.templates', 'LocalStorageModule']);
 
 app.config(function($locationProvider, $urlRouterProvider) {
   $locationProvider.hashPrefix('!');
@@ -17,7 +17,9 @@ app.config(function($mdIconProvider) {
 });
 
 app.config(function($mdThemingProvider) {
-  return $mdThemingProvider.theme('default').primaryPalette('lime').accentPalette('blue-grey');
+  return $mdThemingProvider.theme('default').primaryPalette('lime').accentPalette('blue-grey').backgroundPalette('grey', {
+    'default': '200'
+  });
 });
 
 window.addEventListener('load', function() { 
@@ -62,6 +64,23 @@ angular.module('Coinchoid').config(function($stateProvider) {
     controller: 'DonneCtrl',
     templateUrl: 'states/donne/view.html'
   });
+});
+
+angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdDialog, Parties, $state) {
+  $scope.toggleSidenav = function() {
+    return $mdSidenav('left').toggle();
+  };
+  $scope.openDetails = function() {
+    return $mdBottomSheet.show({
+      templateUrl: 'components/details/view.html',
+      controller: 'ResultatsCtrl'
+    });
+  };
+  return $scope.reset = function(ev) {
+    var confirm;
+    confirm = $mdDialog.confirm().title('Nouvelle partie').ariaLabel('Nouvelle partie ?').targetEvent(ev).ok('Oui !').cancel('Annuler');
+    return $mdDialog.show(confirm).then(Parties.reset);
+  };
 });
 
 angular.module('Coinchoid').service('Parties', function(localStorageService, $rootScope) {
@@ -135,23 +154,6 @@ angular.module('Coinchoid').service('Parties', function(localStorageService, $ro
         return last;
       };
     })(this)
-  };
-});
-
-angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdDialog, Parties, $state) {
-  $scope.toggleSidenav = function() {
-    return $mdSidenav('left').toggle();
-  };
-  $scope.openDetails = function() {
-    return $mdBottomSheet.show({
-      templateUrl: 'components/details/view.html',
-      controller: 'ResultatsCtrl'
-    });
-  };
-  return $scope.reset = function(ev) {
-    var confirm;
-    confirm = $mdDialog.confirm().title('Nouvelle partie').ariaLabel('Nouvelle partie ?').targetEvent(ev).ok('Oui !').cancel('Annuler');
-    return $mdDialog.show(confirm).then(Parties.reset);
   };
 });
 

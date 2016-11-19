@@ -31,6 +31,14 @@ md-sidenav .header .title {
   height: 16px;
   font-weight: 500;
 }
+.score {
+  font-size: 45px;
+  font-weight: 400;
+  line-height: 64px;
+}
+.qui-prend {
+  margin-top: 0px;
+}
 .bottom-sheet-call {
   position: absolute;
   bottom: 0;
@@ -61,7 +69,11 @@ point-selector md-radio-button {
   margin-left: 10px !important;
 }
 point-selector .options {
-  padding: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+point-selector .label {
+  margin-top: 5px;
 }
 point-selector .coinche {
   margin-top: 10px;

@@ -7,6 +7,7 @@ app = angular.module 'Coinchoid', [
   'ngSanitize'
   'ngMaterial'
   'ngMessages'
+  'ngTouch'
   'ui.router'
   'app.templates'
   'LocalStorageModule'
@@ -32,3 +33,4 @@ app.config ($mdThemingProvider) ->
   $mdThemingProvider.theme('default')
     .primaryPalette('lime')
     .accentPalette('blue-grey')
+    .backgroundPalette('grey', {'default': '200'})
