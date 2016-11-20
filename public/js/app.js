@@ -1,7 +1,7 @@
 'use strict';
 var app;
 
-app = angular.module('Coinchoid', ['ng', 'ngResource', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ngTouch', 'ui.router', 'app.templates', 'LocalStorageModule']);
+app = angular.module('Coinchoid', ['ng', 'ngResource', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngTouch', 'ui.router', 'app.templates', 'LocalStorageModule']);
 
 app.config(function($locationProvider, $urlRouterProvider) {
   $locationProvider.hashPrefix('!');
@@ -128,6 +128,18 @@ angular.module('Coinchoid').service('Parties', function(localStorageService, $ro
   };
 });
 
+angular.module('Coinchoid').config(function($stateProvider) {
+  return $stateProvider.state('nav', {
+    abstract: true,
+    templateUrl: 'states/nav.html',
+    controller: 'NavCtrl'
+  }).state('nav.annonce', {
+    url: '/',
+    controller: 'DonneCtrl',
+    templateUrl: 'states/donne/view.html'
+  });
+});
+
 angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdDialog, Parties, $state) {
   $scope.toggleSidenav = function() {
     return $mdSidenav('left').toggle();
@@ -145,18 +157,6 @@ angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $
   };
 });
 
-angular.module('Coinchoid').config(function($stateProvider) {
-  return $stateProvider.state('nav', {
-    abstract: true,
-    templateUrl: 'states/nav.html',
-    controller: 'NavCtrl'
-  }).state('nav.annonce', {
-    url: '/',
-    controller: 'DonneCtrl',
-    templateUrl: 'states/donne/view.html'
-  });
-});
-
 angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, $mdDialog, $mdBottomSheet, Parties) {
   $scope.parties = Parties.getCumulativeScore();
   return $scope.edit = function(index, ev) {
@@ -172,6 +172,17 @@ angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, $mdDial
         }
       }
     });
+  };
+});
+
+angular.module('Coinchoid').controller('editorCtrl', function($scope, $mdDialog, index, Parties) {
+  $scope.result = Parties.get(index);
+  $scope.cancel = function() {
+    return $mdDialog.cancel();
+  };
+  return $scope.save = function(nous, eux) {
+    Parties.editScore(index, nous, eux);
+    return $mdDialog.hide();
   };
 });
 
@@ -338,16 +349,5 @@ angular.module('Coinchoid').controller('DonneCtrl', function($scope, $mdDialog, 
         }
       }
     });
-  };
-});
-
-angular.module('Coinchoid').controller('editorCtrl', function($scope, $mdDialog, index, Parties) {
-  $scope.result = Parties.get(index);
-  $scope.cancel = function() {
-    return $mdDialog.cancel();
-  };
-  return $scope.save = function(nous, eux) {
-    Parties.editScore(index, nous, eux);
-    return $mdDialog.hide();
   };
 });

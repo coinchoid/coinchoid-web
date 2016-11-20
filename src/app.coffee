@@ -6,7 +6,6 @@ app = angular.module 'Coinchoid', [
   'ngAnimate'
   'ngSanitize'
   'ngMaterial'
-  'ngMessages'
   'ngTouch'
   'ui.router'
   'app.templates'
