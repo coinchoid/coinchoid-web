@@ -5,7 +5,6 @@ angular.module 'Coinchoid'
   .state 'nav',
     abstract: true
     templateUrl: 'states/nav.html'
-    controller: 'NavCtrl'
 
   .state 'nav.annonce',
     url: '/'
@@ -26,3 +25,15 @@ angular.module 'Coinchoid'
       .catch -> $state.go '^'
     onExit: ($mdDialog) ->
       $mdDialog.hide()
+
+  .state 'nav.annonce.details',
+    url: 'details'
+    onEnter: ($mdBottomSheet, $state) ->
+      $mdBottomSheet.show(
+        templateUrl: 'components/details/view.html'
+        controller: 'ResultatsCtrl'
+      )
+      .then -> $state.go '^'
+      .catch -> $state.go '^'
+    onExit: ($mdBottomSheet) ->
+      $mdBottomSheet.hide()
