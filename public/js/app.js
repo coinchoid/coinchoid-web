@@ -54,6 +54,18 @@ window.addEventListener('load', function() {
   document.addEventListener('touchmove', touchmoveHandler, false); 
 }); 
 
+angular.module('Coinchoid').config(function($stateProvider) {
+  return $stateProvider.state('nav', {
+    abstract: true,
+    templateUrl: 'states/nav.html',
+    controller: 'NavCtrl'
+  }).state('nav.annonce', {
+    url: '/',
+    controller: 'DonneCtrl',
+    templateUrl: 'states/donne/view.html'
+  });
+});
+
 angular.module('Coinchoid').service('Parties', function(localStorageService, $rootScope) {
   var getCumulativeScore, parties;
   parties = localStorageService.get('results') || [];
@@ -126,18 +138,6 @@ angular.module('Coinchoid').service('Parties', function(localStorageService, $ro
       };
     })(this)
   };
-});
-
-angular.module('Coinchoid').config(function($stateProvider) {
-  return $stateProvider.state('nav', {
-    abstract: true,
-    templateUrl: 'states/nav.html',
-    controller: 'NavCtrl'
-  }).state('nav.annonce', {
-    url: '/',
-    controller: 'DonneCtrl',
-    templateUrl: 'states/donne/view.html'
-  });
 });
 
 angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdDialog, Parties, $state) {

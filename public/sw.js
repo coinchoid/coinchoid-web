@@ -1,5 +1,5 @@
 
-var current_version = 'coinchoid-v9';
+var current_version = 'coinchoid-v10';
 
 self.addEventListener('install', e => {
   e.waitUntil(
