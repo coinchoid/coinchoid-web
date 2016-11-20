@@ -1,27 +1,3 @@
-'use strict';
-var app;
-
-app = angular.module('Coinchoid', ['ng', 'ngResource', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngTouch', 'ui.router', 'app.templates', 'LocalStorageModule']);
-
-app.config(function($locationProvider, $urlRouterProvider) {
-  $locationProvider.hashPrefix('!');
-  return $urlRouterProvider.otherwise('/');
-});
-
-app.config(function(localStorageServiceProvider) {
-  return localStorageServiceProvider.setPrefix('');
-});
-
-app.config(function($mdIconProvider) {
-  return $mdIconProvider.defaultIconSet('images/icons/mdi.light.svg');
-});
-
-app.config(function($mdThemingProvider) {
-  return $mdThemingProvider.theme('default').primaryPalette('lime').accentPalette('blue-grey').backgroundPalette('grey', {
-    'default': '200'
-  });
-});
-
 window.addEventListener('load', function() { 
 
   var maybePreventPullToRefresh = false; 
@@ -54,6 +30,30 @@ window.addEventListener('load', function() {
   document.addEventListener('touchmove', touchmoveHandler, false); 
 }); 
 
+'use strict';
+var app;
+
+app = angular.module('Coinchoid', ['ng', 'ngResource', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngTouch', 'ui.router', 'app.templates', 'LocalStorageModule']);
+
+app.config(function($locationProvider, $urlRouterProvider) {
+  $locationProvider.hashPrefix('!');
+  return $urlRouterProvider.otherwise('/');
+});
+
+app.config(function(localStorageServiceProvider) {
+  return localStorageServiceProvider.setPrefix('');
+});
+
+app.config(function($mdIconProvider) {
+  return $mdIconProvider.defaultIconSet('images/icons/mdi.light.svg');
+});
+
+app.config(function($mdThemingProvider) {
+  return $mdThemingProvider.theme('default').primaryPalette('lime').accentPalette('blue-grey').backgroundPalette('grey', {
+    'default': '200'
+  });
+});
+
 angular.module('Coinchoid').config(function($stateProvider) {
   return $stateProvider.state('nav', {
     abstract: true,
@@ -63,6 +63,16 @@ angular.module('Coinchoid').config(function($stateProvider) {
     url: '/',
     controller: 'DonneCtrl',
     templateUrl: 'states/donne/view.html'
+  }).state('nav.annonce.new', {
+    url: 'new',
+    onEnter: function($mdDialog, $state, Parties) {
+      return $mdDialog.show($mdDialog.confirm().title('Nouvelle partie').ariaLabel('Nouvelle partie ?').ok('Oui !').cancel('Annuler')).then(Parties.reset)["catch"](function() {
+        return $state.go('^');
+      });
+    },
+    onExit: function($mdDialog) {
+      return $mdDialog.hide();
+    }
   });
 });
 
@@ -140,20 +150,15 @@ angular.module('Coinchoid').service('Parties', function(localStorageService, $ro
   };
 });
 
-angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdBottomSheet, $mdDialog, Parties, $state) {
+angular.module('Coinchoid').controller('NavCtrl', function($scope, $mdSidenav, $mdBottomSheet) {
   $scope.toggleSidenav = function() {
     return $mdSidenav('left').toggle();
   };
-  $scope.openDetails = function() {
+  return $scope.openDetails = function() {
     return $mdBottomSheet.show({
       templateUrl: 'components/details/view.html',
       controller: 'ResultatsCtrl'
     });
-  };
-  return $scope.reset = function(ev) {
-    var confirm;
-    confirm = $mdDialog.confirm().title('Nouvelle partie').ariaLabel('Nouvelle partie ?').targetEvent(ev).ok('Oui !').cancel('Annuler');
-    return $mdDialog.show(confirm).then(Parties.reset);
   };
 });
 
