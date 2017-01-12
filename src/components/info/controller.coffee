@@ -1,3 +1,3 @@
 angular.module 'Coinchoid'
 .controller 'infoCtrl', ($scope, annonce, Info) ->
-  $scope.annonce = Info[annonce]
+  $scope.annonce = Info.getHelp(annonce)
