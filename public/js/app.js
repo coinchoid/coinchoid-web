@@ -164,6 +164,17 @@ angular.module('Coinchoid').service('Parties', function(localStorageService, $ro
   };
 });
 
+angular.module('Coinchoid').controller('editorCtrl', function($scope, $mdDialog, index, Parties) {
+  $scope.result = Parties.get(index);
+  $scope.cancel = function() {
+    return $mdDialog.cancel();
+  };
+  return $scope.save = function(nous, eux) {
+    Parties.editScore(index, nous, eux);
+    return $mdDialog.hide();
+  };
+});
+
 angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, $mdDialog, $mdBottomSheet, Parties) {
   $scope.parties = Parties.getCumulativeScore();
   return $scope.edit = function(index, ev) {
@@ -182,17 +193,6 @@ angular.module('Coinchoid').controller('ResultatsCtrl', function($scope, $mdDial
   };
 });
 
-angular.module('Coinchoid').controller('editorCtrl', function($scope, $mdDialog, index, Parties) {
-  $scope.result = Parties.get(index);
-  $scope.cancel = function() {
-    return $mdDialog.cancel();
-  };
-  return $scope.save = function(nous, eux) {
-    Parties.editScore(index, nous, eux);
-    return $mdDialog.hide();
-  };
-});
-
 angular.module('Coinchoid').controller('infoCtrl', function($scope, annonce, Info) {
   return $scope.annonce = Info.getHelp(annonce);
 });
@@ -201,12 +201,12 @@ angular.module('Coinchoid').service('Info', function() {
   return {
     getHelp: function(input) {
       if (input === 'capot' || input > 160) {
-        ({
+        return {
           chuSansAtout: 0,
           chuToutAtout: 0,
           reussiSansAtout: 0,
           reussiToutAtout: 0
-        });
+        };
       }
       return {
         chuSansAtout: Math.ceil((162 - input) * 130 / 162),
