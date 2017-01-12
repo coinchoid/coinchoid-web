@@ -200,7 +200,7 @@ angular.module('Coinchoid').controller('infoCtrl', function($scope, annonce, Inf
 angular.module('Coinchoid').service('Info', function() {
   return {
     getHelp: function(input) {
-      if (input === 'capot') {
+      if (input === 'capot' || input > 160) {
         ({
           chuSansAtout: 0,
           chuToutAtout: 0,
