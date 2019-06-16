@@ -27,19 +27,21 @@ export const Coinche = ({ value, onItemClick }) => {
 };
 
 const Wrapper = styled.div`
+  margin-top: 15px;
   display: flex;
   justify-content: space-evenly;
 `;
 
 const Item = styled.div`
   min-width: 40%;
-  height: 120px;
+  height: 80px;
   background-color: ${props =>
     props.selected ? "rgb(205, 220, 57)" : "#b0bec5"};
 
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0 10px;
   font-size: 16px;
   font-weight: bold;
 `;

@@ -11,8 +11,9 @@ export const Result = ({ onItemClick }) => {
 };
 
 const Wrapper = styled.div`
+  margin-top: 20px;
   display: flex;
-  height: 150px;
+  height: 80px;
   width: 100%;
 `;
 

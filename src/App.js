@@ -98,7 +98,6 @@ const Content = styled.div`
   flex-direction: column;
   flex-grow: 1;
   justify-content: space-between;
-  padding: 20px;
 `;
 
 const BodyStyle = createGlobalStyle`
