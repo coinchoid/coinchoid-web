@@ -36,20 +36,18 @@ function App() {
             setScores={setScores}
           />
         ) : (
-          <>
-            <Content>
-              <ScoreCard
-                onClick={() => setShowEdit(true)}
-                theirScore={computeScore(scores, "THEM")}
-                ourScore={computeScore(scores, "US")}
-              />
-              <BetSelector
-                selectedScore={selectedScore}
-                onItemClick={value => setSelectedScore(value)}
-                multiplicationFactor={multiplicationFactor}
-                setMultiplicationFactor={setMultiplicationFactor}
-              />
-            </Content>
+          <Content>
+            <ScoreCard
+              onClick={() => setShowEdit(true)}
+              theirScore={computeScore(scores, "THEM")}
+              ourScore={computeScore(scores, "US")}
+            />
+            <BetSelector
+              selectedScore={selectedScore}
+              onItemClick={value => setSelectedScore(value)}
+              multiplicationFactor={multiplicationFactor}
+              setMultiplicationFactor={setMultiplicationFactor}
+            />
             <Result
               onItemClick={winnerTeam => {
                 const score = selectedScore * multiplicationFactor;
@@ -65,7 +63,7 @@ function App() {
                 setMultiplicationFactor(1);
               }}
             />
-          </>
+          </Content>
         )}
       </Wrapper>
       <InfoModal
