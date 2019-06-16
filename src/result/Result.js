@@ -4,8 +4,8 @@ import styled from "styled-components";
 export const Result = ({ onItemClick }) => {
   return (
     <Wrapper>
-      <LooseItem onClick={() => onItemClick("THEM")}>On la perd !</LooseItem>
-      <WinItem onClick={() => onItemClick("US")}>On la fait !</WinItem>
+      <LooseItem onClick={() => onItemClick("THEM")}>Points pour eux</LooseItem>
+      <WinItem onClick={() => onItemClick("US")}>Points pour nous</WinItem>
     </Wrapper>
   );
 };
