@@ -28,7 +28,6 @@ function App() {
         <BodyStyle />
         <Navbar
           reset={() => setScores([])}
-          showEdit={() => setShowEdit(true)}
           showInfo={() => setShowInfo(true)}
         />
         {showEdit ? (
@@ -41,6 +40,7 @@ function App() {
           <>
             <Content>
               <ScoreCard
+                onClick={() => setShowEdit(true)}
                 theirScore={computeScore(scores, "THEM")}
                 ourScore={computeScore(scores, "US")}
               />
