@@ -93,6 +93,7 @@ const Content = styled.div`
   flex-direction: column;
   flex-grow: 1;
   justify-content: space-between;
+  width: 100%;
 `;
 
 const BodyStyle = createGlobalStyle`
