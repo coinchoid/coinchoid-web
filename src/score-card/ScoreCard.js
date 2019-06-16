@@ -6,8 +6,8 @@ export const ScoreCard = ({ theirScore, ourScore, onClick }) => {
   return (
     <Card onClick={onClick}>
       <Edit />
-      <TeamScore team="Nous" score={ourScore} />
       <TeamScore team="Eux" score={theirScore} />
+      <TeamScore team="Nous" score={ourScore} />
     </Card>
   );
 };
