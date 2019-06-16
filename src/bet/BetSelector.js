@@ -90,13 +90,14 @@ const Wrapper = styled.div`
   justify-content: center;
   width: 100%;
   position: relative;
+  flex-grow: 1;
 `;
 
 const Item = styled.div`
   flex-grow: 0;
   flex-basis: 1;
   width: calc(25% - 2px);
-  height: 50px;
+  min-height: 50px;
   background-color: ${props =>
     props.selected ? "rgb(205, 220, 57)" : "#b0bec5"};
   margin: 1px;
