@@ -4,7 +4,6 @@ import styled, { createGlobalStyle } from "styled-components";
 import { Navbar } from "./navbar/Navbar";
 import { ScoreCard } from "./score-card/ScoreCard";
 import { BetSelector } from "./bet/BetSelector";
-import { Coinche } from "./bet/Coinche";
 import { Result } from "./result/Result";
 import { useLocalStorageState } from "./useLocalStorageState";
 import { EditPage } from "./edit/EditPage";
@@ -47,10 +46,8 @@ function App() {
               <BetSelector
                 selectedScore={selectedScore}
                 onItemClick={value => setSelectedScore(value)}
-              />
-              <Coinche
-                value={multiplicationFactor}
-                onItemClick={setMultiplicationFactor}
+                multiplicationFactor={multiplicationFactor}
+                setMultiplicationFactor={setMultiplicationFactor}
               />
             </Content>
             <Result

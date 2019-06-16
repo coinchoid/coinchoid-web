@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const bets = [
   {
@@ -51,16 +51,33 @@ const bets = [
     value: 250
   }
 ];
-export const BetSelector = ({ selectedScore, onItemClick }) => {
+export const BetSelector = ({
+  selectedScore,
+  onItemClick,
+  multiplicationFactor,
+  setMultiplicationFactor
+}) => {
   return (
     <Wrapper>
       {bets.map(({ label, value }) => (
         <Item
           key={value}
-          onClick={() => onItemClick(value)}
+          onClick={() => {
+            if (selectedScore === value && multiplicationFactor === 1) {
+              return setMultiplicationFactor(2);
+            }
+            if (selectedScore === value && multiplicationFactor === 2) {
+              return setMultiplicationFactor(4);
+            }
+            onItemClick(value);
+            setMultiplicationFactor(1);
+          }}
           selected={selectedScore === value}
         >
           {label}
+          {selectedScore === value && (
+            <CoinchedStatus multiplicationFactor={multiplicationFactor} />
+          )}
         </Item>
       ))}
     </Wrapper>
@@ -84,10 +101,45 @@ const Item = styled.div`
     props.selected ? "rgb(205, 220, 57)" : "#b0bec5"};
   margin: 1px;
   cursor: pointer;
+  position: relative;
 
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 16px;
   font-weight: bold;
+`;
+
+const CoinchedStatus = ({ multiplicationFactor }) => {
+  return (
+    <CoinchedStatusWrapper>
+      <Clac highlight={multiplicationFactor >= 2}>
+        <span role="img" aria-label="coinched">
+          🤛
+        </span>
+      </Clac>
+      <Clac highlight={multiplicationFactor === 4}>
+        <span role="img" aria-label="coinched">
+          🤛
+        </span>
+      </Clac>
+    </CoinchedStatusWrapper>
+  );
+};
+
+const outlinedCss = css`
+  color: transparent;
+  text-shadow: 0 0 0 grey;
+  position: relative;
+`;
+
+const Clac = styled.span`
+  ${props => !props.highlight && outlinedCss}
+`;
+
+const CoinchedStatusWrapper = styled.div`
+  position: absolute;
+  right: 0%;
+  bottom: 0%;
+  font-size: 12px;
 `;
