@@ -8,9 +8,11 @@ import { Result } from "./result/Result";
 import { useLocalStorageState } from "./useLocalStorageState";
 import { EditPage } from "./edit/EditPage";
 import { InfoModal } from "./edit/InfoModal";
+import { useLongPress } from "./useLongPress";
 
 function App() {
   const [selectedScore, setSelectedScore] = useState(80);
+  const [infoScore, setInfoScore] = useState(80);
   const [multiplicationFactor, setMultiplicationFactor] = useState(1);
   const [showEdit, setShowEdit] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
@@ -21,6 +23,10 @@ function App() {
     JSON.stringify
   );
   const [playerOffset, setPlayerOffset] = useState(0);
+  const itemLongClick = useLongPress(itemScore => {
+    setInfoScore(itemScore);
+    setShowInfo(true);
+  });
 
   return (
     <ModalProvider>
@@ -47,7 +53,12 @@ function App() {
             />
             <BetSelector
               selectedScore={selectedScore}
-              onItemClick={value => setSelectedScore(value)}
+              onItemClick={value => {
+                setInfoScore(value);
+                setSelectedScore(value);
+              }}
+              onItemTouchStart={itemLongClick.onTouchStart}
+              onItemTouchEnd={itemLongClick.onTouchEnd}
               multiplicationFactor={multiplicationFactor}
               setMultiplicationFactor={setMultiplicationFactor}
             />
@@ -71,7 +82,7 @@ function App() {
         )}
       </Wrapper>
       <InfoModal
-        score={selectedScore}
+        score={infoScore}
         onClose={() => setShowInfo(false)}
         isOpen={showInfo}
       />
