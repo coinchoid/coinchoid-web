@@ -110,6 +110,9 @@ const BodyStyle = createGlobalStyle`
  #root {
    height: 100%;
  }
+ * {
+  user-select: none;
+ }
 `;
 
 export default App;
