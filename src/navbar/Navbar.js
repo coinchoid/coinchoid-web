@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { PlayerIndicator } from "./PlayerIndicator";
+import { useLongPress } from "../useLongPress";
+import { Dialog, DialogTitle } from "../Dialog";
 
 export const Navbar = ({
   reset,
@@ -8,11 +10,15 @@ export const Navbar = ({
   playerOffset,
   incrementPlayerOffset
 }) => {
+  const [showDialog, setShowDialog] = useState(false);
   return (
     <Wrapper>
       <Title>Coinchoid</Title>
       <Actions>
-        <IconWrapper onClick={incrementPlayerOffset}>
+        <IconWrapper
+          onClick={incrementPlayerOffset}
+          {...useLongPress(() => setShowDialog(true))}
+        >
           <PlayerIndicator playerOffset={playerOffset} />
         </IconWrapper>
         <IconWrapper onClick={showInfo}>
@@ -22,6 +28,37 @@ export const Navbar = ({
           <Reset />
         </IconWrapper>
       </Actions>
+      <Dialog
+        isOpen={showDialog}
+        onBackgroundClick={() => setShowDialog(false)}
+        onEscapeKeydown={() => setShowDialog(false)}
+      >
+        <DialogTitle>Qui distribue ?</DialogTitle>
+        <PlayerWrapper>
+          <IconWrapper>
+            <PlayerIndicator playerOffset={0} />
+          </IconWrapper>
+          Toi
+        </PlayerWrapper>
+        <PlayerWrapper>
+          <IconWrapper>
+            <PlayerIndicator playerOffset={1} />
+          </IconWrapper>
+          Joueur à gauche
+        </PlayerWrapper>
+        <PlayerWrapper>
+          <IconWrapper>
+            <PlayerIndicator playerOffset={2} />
+          </IconWrapper>
+          Joueur en face
+        </PlayerWrapper>
+        <PlayerWrapper>
+          <IconWrapper>
+            <PlayerIndicator playerOffset={3} />
+          </IconWrapper>
+          Joueur à droite
+        </PlayerWrapper>
+      </Dialog>
     </Wrapper>
   );
 };
@@ -51,6 +88,11 @@ const Title = styled.h1`
 const IconWrapper = styled.div`
   padding: 8px;
   cursor: pointer;
+`;
+
+const PlayerWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Reset = () => {
