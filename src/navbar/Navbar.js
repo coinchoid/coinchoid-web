@@ -1,11 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import { PlayerIndicator } from "./PlayerIndicator";
 
-export const Navbar = ({ reset, showInfo }) => {
+export const Navbar = ({
+  reset,
+  showInfo,
+  playerOffset,
+  incrementPlayerOffset
+}) => {
   return (
     <Wrapper>
       <Title>Coinchoid</Title>
       <Actions>
+        <IconWrapper onClick={incrementPlayerOffset}>
+          <PlayerIndicator playerOffset={playerOffset} />
+        </IconWrapper>
         <IconWrapper onClick={showInfo}>
           <Info />
         </IconWrapper>

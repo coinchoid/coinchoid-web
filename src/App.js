@@ -20,6 +20,7 @@ function App() {
     JSON.parse,
     JSON.stringify
   );
+  const [playerOffset, setPlayerOffset] = useState(0);
 
   return (
     <ModalProvider>
@@ -28,6 +29,8 @@ function App() {
         <Navbar
           reset={() => setScores([])}
           showInfo={() => setShowInfo(true)}
+          playerOffset={playerOffset}
+          incrementPlayerOffset={() => setPlayerOffset(playerOffset + 1)}
         />
         {showEdit ? (
           <EditPage
@@ -61,6 +64,7 @@ function App() {
                 ]);
                 setSelectedScore(80);
                 setMultiplicationFactor(1);
+                setPlayerOffset(playerOffset + 1);
               }}
             />
           </Content>
