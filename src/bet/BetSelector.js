@@ -54,6 +54,8 @@ const bets = [
 export const BetSelector = ({
   selectedScore,
   onItemClick,
+  onItemTouchStart,
+  onItemTouchEnd,
   multiplicationFactor,
   setMultiplicationFactor
 }) => {
@@ -73,6 +75,8 @@ export const BetSelector = ({
             setMultiplicationFactor(1);
           }}
           selected={selectedScore === value}
+          onTouchStart={() => onItemTouchStart(value)}
+          onTouchEnd={onItemTouchEnd}
         >
           {label}
           {selectedScore === value && (
